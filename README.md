@@ -3,5 +3,5 @@ This project focuses on efficient 3D reconstruction of indoor spaces using an RG
 
 ## CPP and ROS starter:
 ```ruby
-  https://github.com/lukuky64/CPP_with_ROS
+https://github.com/lukuky64/CPP_with_ROS
 ```
