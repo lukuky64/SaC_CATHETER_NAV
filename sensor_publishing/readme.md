@@ -33,13 +33,14 @@ python3 -c "import cv2; print(cv2.__version__)"
 
 ---
 
-## Installation
+## Installation (if you haven't done so already)
 
 Clone the repository and navigate to the project directory.
 
 ```bash
-git clone <repository_url>
-cd <repository_name>
+cd ~/catkin_ws/src
+git clone git@github.com:lukuky64/sensors_and_control.git
+cd <sensors_and_control>
 ```
 
 ---
@@ -58,7 +59,7 @@ catkin_make --pkg sensor_publishing
 
 Ensure that the base data folder is named `Aortic_catheter_project`.
 
-Change directory to the data folder location:
+Change directory to the data folder location (eg):
 
 ```bash
 cd ~/Desktop/Aortic_catheter_project
