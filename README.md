@@ -3,12 +3,12 @@ This project focuses on efficient 3D reconstruction of indoor spaces using an RG
 
 ## Clone this REPO:
 ```Ruby
-cd ~catkin_ws/src
+cd ~/catkin_ws/src
 git clone git@github.com:lukuky64/sensors_and_control.git
 ```
 
 ## CPP and ROS starter:
 ```ruby
-cd ~catkin_ws/src
+cd ~/catkin_ws/src
 git clone https://github.com/lukuky64/CPP_with_ROS
 ```
