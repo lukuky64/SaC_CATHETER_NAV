@@ -69,7 +69,8 @@ cd ~/Desktop/Aortic_catheter_project
 
 ## Run the Node
 
-To run the node, execute the following command:
+To run the node, ensure that you are in the `Aortic_catheter_project`
+base folder, then execute the following command:
 
 ```bash
 rosrun sensor_publishing sensor_publishing_ultrasound_pub
