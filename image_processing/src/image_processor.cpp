@@ -3,17 +3,17 @@
 // Constructor
 ImageProcessor::ImageProcessor(ros::NodeHandle& nh) : nh_(nh)
 {
-    // Initialize the subscriber
-    image_sub_ = nh_.subscribe("your_image_topic", 1, &ImageProcessor::imageCallback, this);
+    // Initialize the subscriber (!!!figure out what we want the queue size to be)
+    image_sub_ = nh_.subscribe("image_topic", 10, &ImageProcessor::imageCallback, this);
 }
 
 // Destructor
 ImageProcessor::~ImageProcessor()
 {
-    // Destructor code, if needed
+    // Destructor code
 }
 
-// Callback function for image subscriber
+// Callback function for image subscriber, currently converting bgr to grescale, change this to suit to suit ultrasonic data
 void ImageProcessor::imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
     cv_bridge::CvImagePtr cv_ptr;
@@ -32,7 +32,7 @@ void ImageProcessor::imageCallback(const sensor_msgs::ImageConstPtr& msg)
     cv::Mat gray_image;
     cv::cvtColor(cv_ptr->image, gray_image, cv::COLOR_BGR2GRAY);
 
-    // Further processing...
+    // more processing...
 }
 
 // Main function
