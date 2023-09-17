@@ -7,7 +7,7 @@ cd ~/catkin_ws/src
 git clone git@github.com:lukuky64/sensors_and_control.git
 ```
 
-## CPP and ROS starter:
+## CPP and ROS starter (if you want to learn how to interact with ros):
 ```ruby
 cd ~/catkin_ws/src
 git clone https://github.com/lukuky64/CPP_with_ROS
