@@ -6,7 +6,7 @@ ImageProcessor::ImageProcessor(ros::NodeHandle& nh) : nh_(nh)
     // Initialize the subscriber (!!!figure out what we want the queue size to be)
     image_sub_ = nh_.subscribe("image_topic", 10, &ImageProcessor::imageCallback, this);
 }
-
+        
 // Destructor
 ImageProcessor::~ImageProcessor()
 {

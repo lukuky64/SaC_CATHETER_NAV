@@ -1,0 +1,8 @@
+prefix=/home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/devel
+
+Name: sensor_publishing
+Description: Description of sensor_publishing
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
