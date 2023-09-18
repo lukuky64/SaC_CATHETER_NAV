@@ -6,6 +6,7 @@
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <vector>
+#include <tf/transform_broadcaster.h>
 
 class PoseToArrowMarker
 {
@@ -17,6 +18,7 @@ private:
     ros::Subscriber pose_subscriber_;
     ros::Publisher marker_publisher_;
     std::vector<visualization_msgs::Marker> marker_array_;
+    int markerLimit_;
 };
 
 #endif // MARKER_PUBLISHER

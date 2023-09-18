@@ -2174,6 +2174,30 @@
 			"value" : "/usr/src/gtest/src/gtest.cc"
 		},
 		{
+			"name" : "actionlib_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for actionlib."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/actionlib/cmake"
+		},
+		{
+			"name" : "actionlib_msgs_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for actionlib_msgs."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/actionlib_msgs/cmake"
+		},
+		{
 			"name" : "catkin_DIR",
 			"properties" : 
 			[
@@ -2196,6 +2220,78 @@
 			],
 			"type" : "PATH",
 			"value" : "/opt/ros/noetic/share/cpp_common/cmake"
+		},
+		{
+			"name" : "gencpp_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for gencpp."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/gencpp/cmake"
+		},
+		{
+			"name" : "geneus_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for geneus."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/geneus/cmake"
+		},
+		{
+			"name" : "genlisp_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for genlisp."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/genlisp/cmake"
+		},
+		{
+			"name" : "genmsg_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for genmsg."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/genmsg/cmake"
+		},
+		{
+			"name" : "gennodejs_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for gennodejs."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/gennodejs/cmake"
+		},
+		{
+			"name" : "genpy_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for genpy."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/genpy/cmake"
 		},
 		{
 			"name" : "geometry_msgs_DIR",
@@ -2423,7 +2519,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/opt/ros/noetic/lib/libxmlrpcpp.so"
+			"value" : "/opt/ros/noetic/lib/libtf2.so"
 		},
 		{
 			"name" : "marker_publishing_BINARY_DIR",
@@ -2448,6 +2544,30 @@
 			],
 			"type" : "STATIC",
 			"value" : "/home/lukuky64/catkin_ws/src/sensors_and_control/marker_publishing"
+		},
+		{
+			"name" : "message_filters_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for message_filters."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/message_filters/cmake"
+		},
+		{
+			"name" : "message_generation_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for message_generation."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/message_generation/cmake"
 		},
 		{
 			"name" : "message_runtime_DIR",
@@ -2510,6 +2630,18 @@
 			"value" : "/opt/ros/noetic/share/roscpp_traits/cmake"
 		},
 		{
+			"name" : "rosgraph_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for rosgraph."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/rosgraph/cmake"
+		},
+		{
 			"name" : "rosgraph_msgs_DIR",
 			"properties" : 
 			[
@@ -2520,6 +2652,18 @@
 			],
 			"type" : "PATH",
 			"value" : "/opt/ros/noetic/share/rosgraph_msgs/cmake"
+		},
+		{
+			"name" : "rospy_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for rospy."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/rospy/cmake"
 		},
 		{
 			"name" : "rostime_DIR",
@@ -2534,6 +2678,18 @@
 			"value" : "/opt/ros/noetic/share/rostime/cmake"
 		},
 		{
+			"name" : "sensor_msgs_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for sensor_msgs."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/sensor_msgs/cmake"
+		},
+		{
 			"name" : "std_msgs_DIR",
 			"properties" : 
 			[
@@ -2544,6 +2700,66 @@
 			],
 			"type" : "PATH",
 			"value" : "/opt/ros/noetic/share/std_msgs/cmake"
+		},
+		{
+			"name" : "tf2_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for tf2."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/tf2/cmake"
+		},
+		{
+			"name" : "tf2_msgs_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for tf2_msgs."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/tf2_msgs/cmake"
+		},
+		{
+			"name" : "tf2_py_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for tf2_py."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/tf2_py/cmake"
+		},
+		{
+			"name" : "tf2_ros_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for tf2_ros."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/tf2_ros/cmake"
+		},
+		{
+			"name" : "tf_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for tf."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/ros/noetic/share/tf/cmake"
 		},
 		{
 			"name" : "visualization_msgs_DIR",
