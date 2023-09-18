@@ -90,6 +90,7 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
         current_time = ros::Time::now();
         msg.header.stamp.sec = current_time.sec;
         msg.header.stamp.nsec = current_time.nsec;
+        msg.header.frame_id = "world";
     }
     return msg;
 }

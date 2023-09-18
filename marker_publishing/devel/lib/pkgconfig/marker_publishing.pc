@@ -1,0 +1,8 @@
+prefix=/home/lukuky64/catkin_ws/src/sensors_and_control/marker_publishing/devel
+
+Name: marker_publishing
+Description: Description of marker_publishing
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
