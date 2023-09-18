@@ -168,19 +168,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named sensor_publishing_ultrasound_pub
-
-# Build rule for target.
-sensor_publishing_ultrasound_pub: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sensor_publishing_ultrasound_pub
-.PHONY : sensor_publishing_ultrasound_pub
-
-# fast build rule for target.
-sensor_publishing_ultrasound_pub/fast:
-	$(MAKE) -f CMakeFiles/sensor_publishing_ultrasound_pub.dir/build.make CMakeFiles/sensor_publishing_ultrasound_pub.dir/build
-.PHONY : sensor_publishing_ultrasound_pub/fast
-
-#=============================================================================
 # Target rules for targets named geometry_msgs_generate_messages_cpp
 
 # Build rule for target.
@@ -270,6 +257,19 @@ doxygen: cmake_check_build_system
 doxygen/fast:
 	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/build
 .PHONY : doxygen/fast
+
+#=============================================================================
+# Target rules for targets named sensor_publishing_sensor_publisher
+
+# Build rule for target.
+sensor_publishing_sensor_publisher: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sensor_publishing_sensor_publisher
+.PHONY : sensor_publishing_sensor_publisher
+
+# fast build rule for target.
+sensor_publishing_sensor_publisher/fast:
+	$(MAKE) -f CMakeFiles/sensor_publishing_sensor_publisher.dir/build.make CMakeFiles/sensor_publishing_sensor_publisher.dir/build
+.PHONY : sensor_publishing_sensor_publisher/fast
 
 #=============================================================================
 # Target rules for targets named run_tests
@@ -622,32 +622,32 @@ gtest/fast:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
-src/ultrasound_publisher.o: src/ultrasound_publisher.cpp.o
+src/sensor_publisher.o: src/sensor_publisher.cpp.o
 
-.PHONY : src/ultrasound_publisher.o
+.PHONY : src/sensor_publisher.o
 
 # target to build an object file
-src/ultrasound_publisher.cpp.o:
-	$(MAKE) -f CMakeFiles/sensor_publishing_ultrasound_pub.dir/build.make CMakeFiles/sensor_publishing_ultrasound_pub.dir/src/ultrasound_publisher.cpp.o
-.PHONY : src/ultrasound_publisher.cpp.o
+src/sensor_publisher.cpp.o:
+	$(MAKE) -f CMakeFiles/sensor_publishing_sensor_publisher.dir/build.make CMakeFiles/sensor_publishing_sensor_publisher.dir/src/sensor_publisher.cpp.o
+.PHONY : src/sensor_publisher.cpp.o
 
-src/ultrasound_publisher.i: src/ultrasound_publisher.cpp.i
+src/sensor_publisher.i: src/sensor_publisher.cpp.i
 
-.PHONY : src/ultrasound_publisher.i
+.PHONY : src/sensor_publisher.i
 
 # target to preprocess a source file
-src/ultrasound_publisher.cpp.i:
-	$(MAKE) -f CMakeFiles/sensor_publishing_ultrasound_pub.dir/build.make CMakeFiles/sensor_publishing_ultrasound_pub.dir/src/ultrasound_publisher.cpp.i
-.PHONY : src/ultrasound_publisher.cpp.i
+src/sensor_publisher.cpp.i:
+	$(MAKE) -f CMakeFiles/sensor_publishing_sensor_publisher.dir/build.make CMakeFiles/sensor_publishing_sensor_publisher.dir/src/sensor_publisher.cpp.i
+.PHONY : src/sensor_publisher.cpp.i
 
-src/ultrasound_publisher.s: src/ultrasound_publisher.cpp.s
+src/sensor_publisher.s: src/sensor_publisher.cpp.s
 
-.PHONY : src/ultrasound_publisher.s
+.PHONY : src/sensor_publisher.s
 
 # target to generate assembly for a file
-src/ultrasound_publisher.cpp.s:
-	$(MAKE) -f CMakeFiles/sensor_publishing_ultrasound_pub.dir/build.make CMakeFiles/sensor_publishing_ultrasound_pub.dir/src/ultrasound_publisher.cpp.s
-.PHONY : src/ultrasound_publisher.cpp.s
+src/sensor_publisher.cpp.s:
+	$(MAKE) -f CMakeFiles/sensor_publishing_sensor_publisher.dir/build.make CMakeFiles/sensor_publishing_sensor_publisher.dir/src/sensor_publisher.cpp.s
+.PHONY : src/sensor_publisher.cpp.s
 
 # Help Target
 help:
@@ -659,7 +659,6 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
-	@echo "... sensor_publishing_ultrasound_pub"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_py"
@@ -667,6 +666,7 @@ help:
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... doxygen"
+	@echo "... sensor_publishing_sensor_publisher"
 	@echo "... run_tests"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_lisp"
@@ -697,9 +697,9 @@ help:
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
-	@echo "... src/ultrasound_publisher.o"
-	@echo "... src/ultrasound_publisher.i"
-	@echo "... src/ultrasound_publisher.s"
+	@echo "... src/sensor_publisher.o"
+	@echo "... src/sensor_publisher.i"
+	@echo "... src/sensor_publisher.s"
 .PHONY : help
 
 

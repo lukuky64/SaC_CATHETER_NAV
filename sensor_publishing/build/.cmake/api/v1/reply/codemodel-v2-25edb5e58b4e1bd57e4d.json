@@ -392,9 +392,9 @@
 				},
 				{
 					"directoryIndex" : 0,
-					"id" : "sensor_publishing_ultrasound_pub::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-sensor_publishing_ultrasound_pub-Debug-6fdd856641db80fa337b.json",
-					"name" : "sensor_publishing_ultrasound_pub",
+					"id" : "sensor_publishing_sensor_publisher::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sensor_publishing_sensor_publisher-Debug-589adc850523a8300d89.json",
+					"name" : "sensor_publishing_sensor_publisher",
 					"projectIndex" : 0
 				},
 				{

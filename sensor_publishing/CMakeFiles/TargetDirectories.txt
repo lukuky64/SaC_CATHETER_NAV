@@ -2,7 +2,6 @@
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/install.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/list_install_components.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/edit_cache.dir
-/home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/sensor_publishing_ultrasound_pub.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/geometry_msgs_generate_messages_cpp.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/roscpp_generate_messages_py.dir
@@ -10,6 +9,7 @@
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/std_msgs_generate_messages_py.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/rosgraph_msgs_generate_messages_py.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/doxygen.dir
+/home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/sensor_publishing_sensor_publisher.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/run_tests.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/std_msgs_generate_messages_lisp.dir
 /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/CMakeFiles/sensor_msgs_generate_messages_lisp.dir

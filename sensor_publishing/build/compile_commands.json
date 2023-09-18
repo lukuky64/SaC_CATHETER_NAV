@@ -1,8 +1,8 @@
 [
 {
   "directory": "/home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/build",
-  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"sensor_publishing\\\" -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -isystem /usr/include/opencv4  -g   -o CMakeFiles/sensor_publishing_ultrasound_pub.dir/src/ultrasound_publisher.cpp.o -c /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/src/ultrasound_publisher.cpp",
-  "file": "/home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/src/ultrasound_publisher.cpp"
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"sensor_publishing\\\" -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -isystem /usr/include/opencv4  -g   -o CMakeFiles/sensor_publishing_sensor_publisher.dir/src/sensor_publisher.cpp.o -c /home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/src/sensor_publisher.cpp",
+  "file": "/home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/src/sensor_publisher.cpp"
 },
 {
   "directory": "/home/lukuky64/catkin_ws/src/sensors_and_control/sensor_publishing/build/gtest/googlemock",

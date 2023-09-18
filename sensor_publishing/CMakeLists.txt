@@ -136,7 +136,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_ultrasound_pub src/ultrasound_publisher.cpp)
+add_executable(${PROJECT_NAME}_sensor_publisher src/sensor_publisher.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -153,7 +153,7 @@ add_executable(${PROJECT_NAME}_ultrasound_pub src/ultrasound_publisher.cpp)
 #   ${catkin_LIBRARIES}
 # )
 
-target_link_libraries(${PROJECT_NAME}_ultrasound_pub ${catkin_LIBRARIES} ${OpenCV_LIBS})  # Added this
+target_link_libraries(${PROJECT_NAME}_sensor_publisher ${catkin_LIBRARIES} ${OpenCV_LIBS})  # Added this
 
 
 #############

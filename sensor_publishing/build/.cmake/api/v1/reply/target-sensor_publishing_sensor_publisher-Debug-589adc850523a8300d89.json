@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "devel/lib/sensor_publishing/sensor_publishing_ultrasound_pub"
+			"path" : "devel/lib/sensor_publishing/sensor_publishing_sensor_publisher"
 		}
 	],
 	"backtrace" : 1,
@@ -174,7 +174,7 @@
 			]
 		}
 	],
-	"id" : "sensor_publishing_ultrasound_pub::@6890427a1f51a3e7e1df",
+	"id" : "sensor_publishing_sensor_publisher::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -746,8 +746,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "sensor_publishing_ultrasound_pub",
-	"nameOnDisk" : "sensor_publishing_ultrasound_pub",
+	"name" : "sensor_publishing_sensor_publisher",
+	"nameOnDisk" : "sensor_publishing_sensor_publisher",
 	"paths" : 
 	{
 		"build" : ".",
@@ -768,7 +768,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/ultrasound_publisher.cpp",
+			"path" : "src/sensor_publisher.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
