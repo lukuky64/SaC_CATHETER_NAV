@@ -9,6 +9,7 @@ Ensure the `sensor_publishing_sensor_publisher` node is operational before proce
 ```Bash
 ~/catkin_ws
 catkin_make
+source ~/catkin_ws/devel/setup.bash
 ```
 ---
 
@@ -42,10 +43,5 @@ Follow these steps, executing each command in a separate terminal window:
 In RViz:
 - Add a marker array.
 - Select the appropriate topic.
-
----
-
-## License
-Include license information here.
 
 ---
