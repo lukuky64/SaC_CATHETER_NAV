@@ -73,18 +73,26 @@ To run the node, ensure that you are in the `Aortic_catheter_project`
 base folder, then execute the following command:
 
 ```bash
-rosrun sensor_publishing sensor_publishing_ultrasound_pub
+rosrun sensor_publishing sensor_publishing_sensor_publisher
 ```
 
 ---
 
 ## Viewing the Data
 
-To view the published data, you'll need to open another terminal and run:
+To view the image data, you'll need to open another terminal and run:
 
 ```bash
 rqt_image_view
 ```
+
+To view the EM data, you'll need to open another terminal and run:
+
+```bash
+rqt_plot
+```
+Then select data you wish to plot.
+
 
 Then, select the appropriate image node from the dropdown menu.
 
