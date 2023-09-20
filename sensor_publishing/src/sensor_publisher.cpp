@@ -81,8 +81,8 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
             msg.pose.pose.position.z = values[2];
             msg.pose.pose.orientation.x = values[3];
             msg.pose.pose.orientation.y = values[4];
-            msg.pose.pose.orientation.z = values[5];
-            msg.pose.pose.orientation.w = values[6];
+            msg.pose.pose.orientation.z = values[6];
+            msg.pose.pose.orientation.w = values[5]; // need to get the ordering correct, but this one should be right
         }
 
         // sensorPublish::getCovariance(&msg, count_);
