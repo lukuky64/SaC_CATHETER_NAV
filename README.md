@@ -13,6 +13,12 @@ cd ~/catkin_ws/src
 git clone https://github.com/lukuky64/CPP_with_ROS
 ```
 
+## Build the files:
+```ruby
+cd ~/catkin_ws
+catkin_make
+```
+
 ## Running the main simulation:
 Replace the path in `""` with path to the data folder
 ```ruby
