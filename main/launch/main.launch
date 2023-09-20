@@ -1,0 +1,15 @@
+<launch>
+  <!-- Static Transform Publisher -->
+  <node name="static_tf_pub" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 world map"/>
+
+  <!-- Sensor Publishing Node -->
+  <param name="folder_" value="$(env MY_PATH)"/>
+  <node name="sensor_publisher" pkg="sensor_publishing" type="sensor_publishing_sensor_publisher"/>
+
+  <!-- Marker Publishing Node -->
+  <node name="marker_publisher" pkg="marker_publishing" type="marker_publishing_node"/>
+
+  <!-- RViz with specific configuration -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find main)/src/track.rviz"/>
+</launch>
+

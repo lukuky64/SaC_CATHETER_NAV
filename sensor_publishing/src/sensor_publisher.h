@@ -19,7 +19,7 @@ class sensorPublish
 {
 public:
     // Constructor: Initialises the sensorPublish class
-    sensorPublish(ros::NodeHandle& nh);
+    sensorPublish(ros::NodeHandle& nh, std::string baseFile_);
 
     // Destructor: Cleans up resources used by the sensorPublish class
     ~sensorPublish();
@@ -34,7 +34,7 @@ public:
     int getTotalDataCount();
 
     // Sets up file reading parameters, like directory paths
-    void setupFileRead();
+    void setupFileRead(std::string baseFile_);
 
     // Reads an image file based on the count and returns an ImagePtr message
     sensor_msgs::ImagePtr readImage(int count_);

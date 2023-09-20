@@ -1,20 +1,17 @@
 #include "sensor_publisher.h"
 
 // Constructor
-sensorPublish::sensorPublish(ros::NodeHandle &nh) : nh_(nh)
+sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh)
 {
     image_pub_ = nh_.advertise<sensor_msgs::Image>("image_topic", 10);
     EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10);
-    sensorPublish::setupFileRead();
+    sensorPublish::setupFileRead(baseFile_);
     refresh_rate = 30;
 }
 
-void sensorPublish::setupFileRead()
+void sensorPublish::setupFileRead(std::string baseFile_)
 {
-    char buff[FILENAME_MAX];
-    getcwd(buff, FILENAME_MAX);
-    std::string current_working_dir(buff);
-    folderDirectory_ = current_working_dir + "/Data2_Soft_pullback_1/";
+    folderDirectory_ = baseFile_ + "/Data2_Soft_pullback_1/";
     totalDataCount_ = 2002;
 }
 
@@ -122,11 +119,26 @@ void sensorPublish::EMPublish(geometry_msgs::PoseWithCovarianceStamped msg)
 }
 
 // Main function
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
+
     ros::init(argc, argv, "sensor_publisher");
     ros::NodeHandle nh;
-    sensorPublish up(nh);
+
+    std::string folder_;
+    if (nh.getParam("folder_", folder_))
+    {
+        ROS_INFO("Got path: %s", folder_.c_str());
+        
+        // Continue with your logic using my_path
+    }
+    else
+    {
+        ROS_ERROR("Failed to get parameter 'my_path'");
+        return -1;
+    }
+
+    sensorPublish up(nh, folder_);
     ros::Rate loop_rate(up.getRefreshRate());
 
     int count = 0;
