@@ -200,3 +200,26 @@ CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o
  /usr/include/opencv4/opencv2/viz/viz3d.hpp
  /usr/include/opencv4/opencv2/viz/vizcore.hpp
  /usr/include/opencv4/opencv2/viz/widgets.hpp
+ /usr/include/opencv4/opencv2/ximgproc.hpp
+ /usr/include/opencv4/opencv2/ximgproc/brightedges.hpp
+ /usr/include/opencv4/opencv2/ximgproc/color_match.hpp
+ /usr/include/opencv4/opencv2/ximgproc/deriche_filter.hpp
+ /usr/include/opencv4/opencv2/ximgproc/disparity_filter.hpp
+ /usr/include/opencv4/opencv2/ximgproc/edge_filter.hpp
+ /usr/include/opencv4/opencv2/ximgproc/edgeboxes.hpp
+ /usr/include/opencv4/opencv2/ximgproc/edgepreserving_filter.hpp
+ /usr/include/opencv4/opencv2/ximgproc/estimated_covariance.hpp
+ /usr/include/opencv4/opencv2/ximgproc/fast_hough_transform.hpp
+ /usr/include/opencv4/opencv2/ximgproc/fast_line_detector.hpp
+ /usr/include/opencv4/opencv2/ximgproc/fourier_descriptors.hpp
+ /usr/include/opencv4/opencv2/ximgproc/lsc.hpp
+ /usr/include/opencv4/opencv2/ximgproc/paillou_filter.hpp
+ /usr/include/opencv4/opencv2/ximgproc/peilin.hpp
+ /usr/include/opencv4/opencv2/ximgproc/ridgefilter.hpp
+ /usr/include/opencv4/opencv2/ximgproc/run_length_morphology.hpp
+ /usr/include/opencv4/opencv2/ximgproc/seeds.hpp
+ /usr/include/opencv4/opencv2/ximgproc/segmentation.hpp
+ /usr/include/opencv4/opencv2/ximgproc/slic.hpp
+ /usr/include/opencv4/opencv2/ximgproc/sparse_match_interpolator.hpp
+ /usr/include/opencv4/opencv2/ximgproc/structured_edge_detection.hpp
+ /usr/include/opencv4/opencv2/ximgproc/weighted_median_filter.hpp

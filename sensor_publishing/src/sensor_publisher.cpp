@@ -3,7 +3,7 @@
 // Constructor
 sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh)
 {
-    image_pub_ = nh_.advertise<sensor_msgs::Image>("image_topic", 10);
+    image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10);
     EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10);
     sensorPublish::setupFileRead(baseFile_);
     refresh_rate = 30;
@@ -39,10 +39,10 @@ sensor_msgs::ImagePtr sensorPublish::readImage(int count_)
     cv::Mat image = cv::imread(image_path, cv::IMREAD_COLOR);
 
     // Convert the image to greyscale
-    cv::Mat grey_image;
-    cv::cvtColor(image, grey_image, cv::COLOR_BGR2GRAY);
+    //cv::Mat grey_image;
+    //cv::cvtColor(image, grey_image, cv::COLOR_BGR2GRAY);
 
-    sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "mono8", grey_image).toImageMsg();
+    sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
     return msg;
 }
 

@@ -199,4 +199,27 @@ CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/ope
 CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/viz/viz3d.hpp
 CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/viz/vizcore.hpp
 CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/viz/widgets.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/brightedges.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/color_match.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/deriche_filter.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/disparity_filter.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/edge_filter.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/edgeboxes.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/edgepreserving_filter.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/estimated_covariance.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/fast_hough_transform.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/fast_line_detector.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/fourier_descriptors.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/lsc.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/paillou_filter.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/peilin.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/ridgefilter.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/run_length_morphology.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/seeds.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/segmentation.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/slic.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/sparse_match_interpolator.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/structured_edge_detection.hpp
+CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o: /usr/include/opencv4/opencv2/ximgproc/weighted_median_filter.hpp
 
