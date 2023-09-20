@@ -26,7 +26,7 @@ Follow these steps, executing each command in a separate terminal window:
     ```bash
     rosrun tf2_ros static_transform_publisher 0 0 0 0 0 0 world map
     ```
-3. **Run the sensor publishing node:**
+3. **Run the sensor publishing node (cd inside `Aortic_catheter_project` folder):**
     ```bash
     rosrun sensor_publishing sensor_publishing_sensor_publisher
     ```
