@@ -1,5 +1,4 @@
 # GET STARTED
---
 
 ## Clone this REPO:
 ```Ruby
