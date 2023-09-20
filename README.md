@@ -18,7 +18,7 @@ cd ~/catkin_ws
 catkin_make
 ```
 
-## Running the main simulation:
+# Running the main simulation:
 Replace the path in `""` with path to the data folder
 ```ruby
 export MY_PATH="/home/lukuky64/Desktop/Aortic_catheter_project"
