@@ -1,12 +1,12 @@
 #include "image_processor.h"
 
 // Constructor
-ImageProcessor::ImageProcessor(ros::NodeHandle& nh) : nh_(nh), AD_params({0.1, 100.0, 5})
+ImageProcessor::ImageProcessor(ros::NodeHandle& nh) : nh_(nh), AD_params({0.1, 2000.0, 4})
 {
     // Initialize the subscriber (!!!figure out what we want the queue size to be)
     image_sub_ = nh_.subscribe("raw_image_topic", 10, &ImageProcessor::imageCallback, this);
     image_pub_ = nh_.advertise<sensor_msgs::Image>("processed_image", 10);
-}
+}   
 
 // Destructor
 ImageProcessor::~ImageProcessor()
@@ -66,8 +66,8 @@ void ImageProcessor::imageCallback(const sensor_msgs::ImageConstPtr& msg)
 
     // Apply Gaussian blur, creating a 5x5 kernal size with SD set to 0 for x and y
     cv::Mat blurred_image;
-    //cv::GaussianBlur(gray_image, blurred_image, cv::Size(25, 25), 0, 0);
-    cv::ximgproc::anisotropicDiffusion(raw_image, blurred_image, AD_params.alpha, AD_params.K, AD_params.niters);
+    cv::GaussianBlur(raw_image, blurred_image, cv::Size(35, 35), 0, 0);
+   // cv::ximgproc::anisotropicDiffusion(raw_image, blurred_image, AD_params.alpha, AD_params.K, AD_params.niters);
 
     // Convert to grayscale
     cv::Mat gray_image;
@@ -76,7 +76,7 @@ void ImageProcessor::imageCallback(const sensor_msgs::ImageConstPtr& msg)
 
     // Apply threshold to convert the image to black and white
     cv::Mat bw_image;
-    double threshold_value = 128;  // Set threshold value as needed
+    double threshold_value = 85;  // Set threshold value as needed
     cv::threshold(gray_image, bw_image, threshold_value, 255, cv::THRESH_BINARY);
 
     // Convert the OpenCV image back to a ROS message
