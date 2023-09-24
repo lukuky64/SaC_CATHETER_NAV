@@ -28,5 +28,5 @@ The input image is preprocessed with:
 - Labels are human-generated and non-discrete, introducing potential for error and bias
 
 ### Results:
-![Model Accuracy](batch_accuracy_grayscale_64x64.png)
-
+![Model Accuracy](results/batch_accuracy_grayscale_64x64.png)
+![Model Accuracy](results/loss_graph_grayscale_64x64.png)
