@@ -19,7 +19,7 @@ The input image is preprocessed with:
 - Circular masking to eliminate catheter and outer boundaries
 - Square dimensions
 
-<img src="results/0.jpg" alt="Example Input" width="500" height="300">
+<img src="results/0.jpg" alt="Example Input" width="200" height="200">
 
 ### Internal:
 - Input image resized to 64x64 pixels to optimise training speed and remove irrelevant details.
@@ -31,7 +31,7 @@ The input image is preprocessed with:
 
 ### Results:
 Example prediction:
-![Example output](results/image_output_0.jpg)
+<img src="results/image_output_0.jpg" alt="Example output" width="200" height="200">
 
 Final model acurracy = 98.9%
 ![Model Accuracy](results/batch_accuracy_grayscale_64x64.JPG)
