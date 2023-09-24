@@ -18,7 +18,8 @@ The input image is preprocessed with:
 - Converted to greyscale (single channel)
 - Circular masking to eliminate catheter and outer boundaries
 - Square dimensions
-![Model Accuracy](results/0.jpg)
+
+<img src="results/0.jpg" alt="Example Input" width="500" height="300">
 
 ### Internal:
 - Input image resized to 64x64 pixels to optimise training speed and remove irrelevant details.
@@ -30,7 +31,7 @@ The input image is preprocessed with:
 
 ### Results:
 Example prediction:
-![Model Accuracy](results/image_output_0.jpg)
+![Example output](results/image_output_0.jpg)
 
 Final model acurracy = 98.9%
 ![Model Accuracy](results/batch_accuracy_grayscale_64x64.JPG)
