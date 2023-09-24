@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "devel/lib/image_processing/image_processing_test"
+			"path" : "devel/lib/image_processing/image_processing_node"
 		}
 	],
 	"backtrace" : 1,
@@ -174,7 +174,7 @@
 			]
 		}
 	],
-	"id" : "image_processing_test::@6890427a1f51a3e7e1df",
+	"id" : "image_processing_node::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -746,8 +746,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "image_processing_test",
-	"nameOnDisk" : "image_processing_test",
+	"name" : "image_processing_node",
+	"nameOnDisk" : "image_processing_node",
 	"paths" : 
 	{
 		"build" : ".",

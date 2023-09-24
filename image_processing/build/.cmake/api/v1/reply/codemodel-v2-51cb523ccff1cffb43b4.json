@@ -280,9 +280,9 @@
 				},
 				{
 					"directoryIndex" : 0,
-					"id" : "image_processing_test::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-image_processing_test-Debug-95ee444101192cfc88be.json",
-					"name" : "image_processing_test",
+					"id" : "image_processing_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-image_processing_node-Debug-0a59ca231fdd6770aaf4.json",
+					"name" : "image_processing_node",
 					"projectIndex" : 0
 				},
 				{

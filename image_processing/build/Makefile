@@ -363,19 +363,6 @@ roscpp_generate_messages_cpp/fast:
 .PHONY : roscpp_generate_messages_cpp/fast
 
 #=============================================================================
-# Target rules for targets named image_processing_test
-
-# Build rule for target.
-image_processing_test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 image_processing_test
-.PHONY : image_processing_test
-
-# fast build rule for target.
-image_processing_test/fast:
-	$(MAKE) -f CMakeFiles/image_processing_test.dir/build.make CMakeFiles/image_processing_test.dir/build
-.PHONY : image_processing_test/fast
-
-#=============================================================================
 # Target rules for targets named roscpp_generate_messages_lisp
 
 # Build rule for target.
@@ -452,6 +439,19 @@ roscpp_generate_messages_nodejs: cmake_check_build_system
 roscpp_generate_messages_nodejs/fast:
 	$(MAKE) -f CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make CMakeFiles/roscpp_generate_messages_nodejs.dir/build
 .PHONY : roscpp_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named image_processing_node
+
+# Build rule for target.
+image_processing_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 image_processing_node
+.PHONY : image_processing_node
+
+# fast build rule for target.
+image_processing_node/fast:
+	$(MAKE) -f CMakeFiles/image_processing_node.dir/build.make CMakeFiles/image_processing_node.dir/build
+.PHONY : image_processing_node/fast
 
 #=============================================================================
 # Target rules for targets named rosgraph_msgs_generate_messages_cpp
@@ -628,7 +628,7 @@ src/image_processor.o: src/image_processor.cpp.o
 
 # target to build an object file
 src/image_processor.cpp.o:
-	$(MAKE) -f CMakeFiles/image_processing_test.dir/build.make CMakeFiles/image_processing_test.dir/src/image_processor.cpp.o
+	$(MAKE) -f CMakeFiles/image_processing_node.dir/build.make CMakeFiles/image_processing_node.dir/src/image_processor.cpp.o
 .PHONY : src/image_processor.cpp.o
 
 src/image_processor.i: src/image_processor.cpp.i
@@ -637,7 +637,7 @@ src/image_processor.i: src/image_processor.cpp.i
 
 # target to preprocess a source file
 src/image_processor.cpp.i:
-	$(MAKE) -f CMakeFiles/image_processing_test.dir/build.make CMakeFiles/image_processing_test.dir/src/image_processor.cpp.i
+	$(MAKE) -f CMakeFiles/image_processing_node.dir/build.make CMakeFiles/image_processing_node.dir/src/image_processor.cpp.i
 .PHONY : src/image_processor.cpp.i
 
 src/image_processor.s: src/image_processor.cpp.s
@@ -646,7 +646,7 @@ src/image_processor.s: src/image_processor.cpp.s
 
 # target to generate assembly for a file
 src/image_processor.cpp.s:
-	$(MAKE) -f CMakeFiles/image_processing_test.dir/build.make CMakeFiles/image_processing_test.dir/src/image_processor.cpp.s
+	$(MAKE) -f CMakeFiles/image_processing_node.dir/build.make CMakeFiles/image_processing_node.dir/src/image_processor.cpp.s
 .PHONY : src/image_processor.cpp.s
 
 # Help Target
@@ -674,7 +674,6 @@ help:
 	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... roscpp_generate_messages_cpp"
-	@echo "... image_processing_test"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... clean_test_results"
 	@echo "... tests"
@@ -682,6 +681,7 @@ help:
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... test"
+	@echo "... image_processing_node"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"

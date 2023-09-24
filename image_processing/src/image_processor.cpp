@@ -1,9 +1,11 @@
 #include "image_processor.h"
 
 // Constructor
-ImageProcessor::ImageProcessor(ros::NodeHandle& nh) : nh_(nh), AD_params({0.1, 2000.0, 4})
+ImageProcessor::ImageProcessor(ros::NodeHandle& nh) : nh_(nh), AD_params({0.1, 2000.0, 4}), 
+resize_(128), catheter_size(40)
 {
     // Initialize the subscriber (!!!figure out what we want the queue size to be)
+    calculateMasks(784,784);
     image_sub_ = nh_.subscribe("raw_image_topic", 10, &ImageProcessor::imageCallback, this);
     image_pub_ = nh_.advertise<sensor_msgs::Image>("processed_image", 10);
 }   
@@ -60,38 +62,85 @@ void ImageProcessor::imageCallback(const sensor_msgs::ImageConstPtr& msg)
         return;
     }
 
-
     // Perform image processing on cv_ptr->image using OpenCV
     cv::Mat raw_image = cv_ptr->image;
 
-    // Apply Gaussian blur, creating a 5x5 kernal size with SD set to 0 for x and y
+    // Apply Gaussian blur, creating a 30x30 kernal size with SD set to 10 for x and y
     cv::Mat blurred_image;
-    cv::GaussianBlur(raw_image, blurred_image, cv::Size(35, 35), 0, 0);
-   // cv::ximgproc::anisotropicDiffusion(raw_image, blurred_image, AD_params.alpha, AD_params.K, AD_params.niters);
+    cv::GaussianBlur(raw_image, blurred_image, cv::Size(29, 29), 10, 10);
 
     // Convert to grayscale
     cv::Mat gray_image;
     // gray_image = ImageProcessor::isolateGray(raw_image);
     cv::cvtColor(blurred_image, gray_image, cv::COLOR_BGR2GRAY);
 
+    applyMask(gray_image);
+
     // Apply threshold to convert the image to black and white
-    cv::Mat bw_image;
-    double threshold_value = 85;  // Set threshold value as needed
-    cv::threshold(gray_image, bw_image, threshold_value, 255, cv::THRESH_BINARY);
+    // cv::Mat bw_image;
+    // double threshold_value = 85;  // Set threshold value as needed
+    // cv::threshold(gray_image, bw_image, threshold_value, 255, cv::THRESH_BINARY);
+    
+    cv::Mat img_resized;
+    cv::resize(gray_image, img_resized, cv::Size(resize_, resize_));
 
     // Convert the OpenCV image back to a ROS message
-    sensor_msgs::ImagePtr output_msg = cv_bridge::CvImage(cv_ptr->header, "mono8", bw_image).toImageMsg();
+    sensor_msgs::ImagePtr output_msg = cv_bridge::CvImage(cv_ptr->header, "mono8", img_resized).toImageMsg();
 
     // Publish the message using your ROS publisher
     image_pub_.publish(output_msg);
 }
+
+
+void ImageProcessor::calculateMasks(int rows, int cols) {
+    frame_size = cols / 2;
+    int centreRow = rows / 2;
+    int centreCol = cols / 2;
+
+    mask = cv::Mat::zeros(rows, cols, CV_8U);
+    maskLarge = cv::Mat::zeros(rows, cols, CV_8U);
+
+    for (int y = 0; y < rows; ++y) {
+        for (int x = 0; x < cols; ++x) {
+            float distanceFromCentre = std::sqrt((x - centreCol) * (x - centreCol) + (y - centreRow) * (y - centreRow));
+            if (distanceFromCentre <= catheter_size) {
+                mask.at<uchar>(y, x) = 1;
+            }
+            if (distanceFromCentre <= frame_size) {
+                maskLarge.at<uchar>(y, x) = 1;
+            }
+        }
+    }
+
+    cv::Mat allOnes = cv::Mat::ones(rows, cols, CV_8U);
+    negativeMask = ~maskLarge & allOnes;
+}
+
+void ImageProcessor::applyMask(cv::Mat &image_) {
+    // Check for 1-channel (grayscale) image
+    if (image_.channels() != 1) {
+        std::cerr << "The input image must be a 1-channel (grayscale) image." << std::endl;
+        return;
+    }
+
+    for (int y = 0; y < image_.rows; ++y) {
+        for (int x = 0; x < image_.cols; ++x) {
+            if (mask.at<uchar>(y, x)) {
+                image_.at<uchar>(y, x) = 0;
+            }
+            if (negativeMask.at<uchar>(y, x)) {
+                image_.at<uchar>(y, x) = 0;
+            }
+        }
+    }
+}
+
 
 // Main function
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "image_processor");
     ros::NodeHandle nh;
-
     ImageProcessor ip(nh);
 
     ros::spin();

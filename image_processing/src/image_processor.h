@@ -36,10 +36,22 @@ public:
     // remove colour from image
     cv::Mat isolateGray(cv::Mat input_image);
 
+    // apply mask over unwanted sections of image
+    void calculateMasks(int rows, int cols);
+    void applyMask(cv::Mat &image_);
+
 private:
     ros::NodeHandle nh_;
     ros::Subscriber image_sub_;
     ros::Publisher image_pub_;  
+
+    cv::Mat mask;
+    cv::Mat maskLarge;
+    cv::Mat negativeMask;
+    int catheter_size;
+    int frame_size;
+    
+    int resize_;
 
     AnisotropicDiffusionParams AD_params;
 };

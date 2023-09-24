@@ -5,6 +5,12 @@
   <!-- Sensor Publishing Node -->
   <param name="folder_" value="$(env MY_PATH)"/>
   <node name="sensor_publisher" pkg="sensor_publishing" type="sensor_publishing_sensor_publisher"/>
+  
+  <!-- Image Processing Node -->
+  <node name="image_processing" pkg="image_processing" type="image_processing_node"/>
+  
+  <!-- CNN prediction node -->
+  <node name="prediction_node" pkg="centre_prediction" type="ros_predict_node.py"/>
 
   <!-- Marker Publishing Node -->
   <node name="marker_publisher" pkg="marker_publishing" type="marker_publishing_node"/>
