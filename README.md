@@ -57,3 +57,9 @@ roslaunch main main.launch
 ```Bash
 rosservice call /set_paused "data: false" 
 ```
+
+To pause again:
+```Bash
+rosservice call /set_paused "data: false" 
+```
+
