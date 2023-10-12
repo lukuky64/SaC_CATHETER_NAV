@@ -42,7 +42,7 @@ catkin_make
 1. Replace the path in the quotes with the path to your data folder:
 
 ```bash
-export MY_PATH="/home/lukuky64/Desktop/Aortic_catheter_project"
+export MY_PATH="/home/lukuky64/Desktop/SaC_CATHETER_NAV"
 ```
 
 2. Launch the main simulation:
