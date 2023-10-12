@@ -12,6 +12,7 @@
   <!-- CNN prediction node -->
   <node name="prediction_node" pkg="centre_prediction" type="ros_predict_node.py"/>
 
+
   <!-- Marker Publishing Node -->
   <node name="marker_publisher" pkg="marker_publishing" type="marker_publishing_node"/>
 
