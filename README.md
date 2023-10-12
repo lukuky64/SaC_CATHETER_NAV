@@ -60,6 +60,6 @@ rosservice call /set_paused "data: false"
 
 To pause again:
 ```Bash
-rosservice call /set_paused "data: false" 
+rosservice call /set_paused "data: true" 
 ```
 
