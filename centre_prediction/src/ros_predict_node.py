@@ -54,9 +54,6 @@ def image_callback(img_msg):
         prediction = loaded_model.predict(img_resized)
 
         # Offset by subtracting 32 and then multiply by 'scaler_' * scaler_
-        #pred_msg.data = [(x - 32) * scaler_ for x in prediction.flatten().tolist()]
-        #pred_msg.data = [(x) for x in prediction.flatten().tolist()]
-
         pred_values = prediction.flatten().tolist()
         first_value = (pred_values[0] - 32) * scaler_
         second_value = -(pred_values[1] - 32) * scaler_  # Flip the sign of the 'y' value

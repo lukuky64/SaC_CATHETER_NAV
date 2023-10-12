@@ -9,8 +9,11 @@
   <!-- Image Processing Node -->
   <node name="image_processing" pkg="image_processing" type="image_processing_node"/>
   
+  
   <!-- CNN prediction node -->
-  <node name="prediction_node" pkg="centre_prediction" type="ros_predict_node.py"/>
+  <node name="prediction_node" pkg="centre_prediction" type="ros_predict_node.py">
+  <param name="scaler_" value="0.07576" />
+  </node>
 
 
   <!-- Marker Publishing Node -->
