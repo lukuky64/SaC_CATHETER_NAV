@@ -16,6 +16,6 @@
   <node name="marker_publisher" pkg="marker_publishing" type="marker_publishing_node"/>
 
   <!-- RViz with specific configuration -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find main)/src/track.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find main)/RVIZ/track.rviz"/>
 </launch>
 
