@@ -52,3 +52,8 @@ roslaunch main main.launch
 ```
 
 ---
+
+3. Unpause publisher:
+```Bash
+rosservice call /set_paused "data: false" 
+```
