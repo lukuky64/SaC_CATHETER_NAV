@@ -24,8 +24,10 @@ int main(int argc, char **argv)
     // User input -> Would you like to visualise the system? (yes/no)
     // once user input is 'yes', roslaunch RVIZ, delay for number of seconds to allow it to load
 
-    // run sensor publishing node, image processing node, marker publishing node and centre prediction node
+    // run sensor publishing node, image processing node, marker publishing node
     // The publshing node should wait 5 seconds, publish the initial location but pause before publishing the rest (for the sake of the fake data)
+    // run the camera calibration node on the first image and find scale value
+    // centre prediction node(input the scale value)
 
     // User input -> Would you like to start the algorithm? (yes/no)
     // once user input is 'yes'
