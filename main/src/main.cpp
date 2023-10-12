@@ -24,12 +24,14 @@ int main(int argc, char **argv)
     // User input -> Would you like to visualise the system? (yes/no)
     // once user input is 'yes', roslaunch RVIZ, delay for number of seconds to allow it to load
 
-    // run sensor publishing node, image processing node, marker publishing node and centre prediction node
-    // the publshing node should publish the initial location but pause before publishing the rest (for the sake of the fake data)
+    // run sensor publishing node, image processing node, marker publishing node
+    // The publshing node should wait 5 seconds, publish the initial location but pause before publishing the rest (for the sake of the fake data)
+    // run the camera calibration node on the first image and find scale value
+    // centre prediction node(input the scale value)
 
     // User input -> Would you like to start the algorithm? (yes/no)
     // once user input is 'yes'
-    // unpause the publishing of the data and let it flow
+    // unpause the publishing of the data and let it flow (rosservice call /set_paused "data: false") but do it through c++ not terminal
 
     // LOOP
     // subscribe to the location of the catheter (EM data at the moment) and check if it has reached its end goal location
