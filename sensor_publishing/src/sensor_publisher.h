@@ -14,6 +14,12 @@
 #include <sstream>
 #include <vector>
 #include <limits>
+#include "std_srvs/SetBool.h"
+#include <boost/bind.hpp>
+#include <thread>
+#include <chrono>
+
+
 
 class sensorPublish
 {
@@ -51,6 +57,14 @@ public:
     // Returns the refresh rate for publishing messages
     int getRefreshRate();
 
+    // sets the state of the program (pause or play)
+    bool setState(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
+
+    // getter for paused_ variable
+    bool getPaused_state();
+
+    void setPaused_state(bool state);
+
 private:
     ros::NodeHandle nh_;               // ROS NodeHandle for managing ROS-related operations
     ros::Publisher image_pub_;         // ROS Publisher for image messages
@@ -59,6 +73,8 @@ private:
     std::string folderDirectory_;      // Directory path where data files are located
     ros::Time current_time;            // Current ROS time
     int refresh_rate;                  // Rate at which messages are published
+    bool paused_;                      // Reflects the state of the publisher, paused or playing
+    //ros::ServiceServer paused_service; // service that changes the paused_ state variable
 };
 
 #endif // IMAGE_PROCESSOR_H

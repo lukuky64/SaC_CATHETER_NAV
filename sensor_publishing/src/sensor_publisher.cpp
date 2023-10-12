@@ -1,7 +1,7 @@
 #include "sensor_publisher.h"
 
 // Constructor
-sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh)
+sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh), paused_(true)
 {
     image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10);
     EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10);
@@ -26,6 +26,14 @@ bool sensorPublish::fileExists(const std::string &imagePath_)
     return file.good();
 }
 
+bool sensorPublish::setState(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res)
+{
+    paused_ = req.data;
+    res.success = true;
+    res.message = "Successfully set state";
+    return true;
+}
+
 sensor_msgs::ImagePtr sensorPublish::readImage(int count_)
 {
     std::string image_path = folderDirectory_ + "Images/" + std::to_string(count_) + ".jpg";
@@ -39,8 +47,8 @@ sensor_msgs::ImagePtr sensorPublish::readImage(int count_)
     cv::Mat image = cv::imread(image_path, cv::IMREAD_COLOR);
 
     // Convert the image to greyscale
-    //cv::Mat grey_image;
-    //cv::cvtColor(image, grey_image, cv::COLOR_BGR2GRAY);
+    // cv::Mat grey_image;
+    // cv::cvtColor(image, grey_image, cv::COLOR_BGR2GRAY);
 
     sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
     return msg;
@@ -102,6 +110,16 @@ int sensorPublish::getTotalDataCount()
     return totalDataCount_;
 }
 
+bool sensorPublish::getPaused_state()
+{
+    return paused_;
+}
+
+void sensorPublish::setPaused_state(bool state)
+{
+    paused_ = state;
+}
+
 // Destructor
 sensorPublish::~sensorPublish()
 {
@@ -129,8 +147,6 @@ int main(int argc, char *argv[])
     if (nh.getParam("folder_", folder_))
     {
         ROS_INFO("Got path: %s", folder_.c_str());
-        
-        // Continue with your logic using my_path
     }
     else
     {
@@ -139,18 +155,23 @@ int main(int argc, char *argv[])
     }
 
     sensorPublish up(nh, folder_);
+
+    ros::ServiceServer paused_service = nh.advertiseService("set_paused", &sensorPublish::setState, &up);
+
     ros::Rate loop_rate(up.getRefreshRate());
 
     int count = 0;
     sensor_msgs::ImagePtr USmsg;
     geometry_msgs::PoseWithCovarianceStamped EMmsg;
 
+    std::this_thread::sleep_for(std::chrono::seconds(5)); // wait a bit before publishing so RVIZ and other programs can load
+
     ROS_INFO("Publishing data...");
 
     while (ros::ok())
     {
         USmsg = up.readImage(count);
-        EMmsg = up.readEM(count); // create function
+        EMmsg = up.readEM(count);
 
         if ((USmsg != nullptr) || (EMmsg.header.frame_id != "invalid"))
         {
@@ -171,9 +192,19 @@ int main(int argc, char *argv[])
             loop_rate.sleep();
         }
 
-        if (count > up.getTotalDataCount())
+        if (count == up.getTotalDataCount())
         {
-            count = 1;
+            up.setPaused_state(true);
+            // count = 1; // to loop back
+        }
+
+        if (count > 1)
+        {
+            while (up.getPaused_state() == true)
+            {
+                // wait here while publisher is paused
+                ros::spinOnce(); // Process incoming messages and service calls
+            }
         }
     }
 
