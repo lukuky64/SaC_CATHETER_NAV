@@ -3,3 +3,4 @@
 *.py linguist-detectable=true
 *.make linguist-detectable=false
 Makefile linguist-detectable=false
+*.cmake linguist-detectable=false
