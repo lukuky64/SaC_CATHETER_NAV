@@ -8,3 +8,4 @@ Makefile linguist-detectable=false
 *.sh linguist-detectable=false
 *.zsh linguist-detectable=false
 *.bash linguist-detectable=false
+catkin_generated/* linguist-vendored
