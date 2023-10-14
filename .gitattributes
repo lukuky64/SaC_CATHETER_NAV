@@ -9,11 +9,6 @@ Makefile linguist-detectable=false
 *.zsh linguist-detectable=false
 *.bash linguist-detectable=false
 *.c linguist-detectable=false
+*.py linguist-detectable=false
 
-SaC_CATHETER_NAV/image_processing/catkin_generated linguist-vendored
-SaC_CATHETER_NAV/sensor_publishing/catkin_generated linguist-vendored
-SaC_CATHETER_NAV/centre_prediction/catkin_generated linguist-vendored
-SaC_CATHETER_NAV/main/catkin_generated linguist-vendored
-SaC_CATHETER_NAV/marker_publishing/catkin_generated linguist-vendored
-SaC_CATHETER_NAV/em_filter/catkin_generated linguist-vendored
-
+centre_prediction/src/*.py linguist-detectable=true
