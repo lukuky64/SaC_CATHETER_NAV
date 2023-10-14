@@ -8,9 +8,11 @@ Makefile linguist-detectable=false
 *.sh linguist-detectable=false
 *.zsh linguist-detectable=false
 *.bash linguist-detectable=false
+*.c linguist-detectable=false
 image_processing/catkin_generated linguist-vendored
 sensor_publishing/catkin_generated linguist-vendored
 centre_prediction/catkin_generated linguist-vendored
 main/catkin_generated linguist-vendored
 marker_publishing/catkin_generated linguist-vendored
 em_filter/catkin_generated linguist-vendored
+
