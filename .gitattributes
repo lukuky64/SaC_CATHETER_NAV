@@ -2,3 +2,4 @@
 *.hpp linguist-detectable=true
 *.py linguist-detectable=true
 *.make linguist-detectable=false
+Makefile linguist-detectable=false
