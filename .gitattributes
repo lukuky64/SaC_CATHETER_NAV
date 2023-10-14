@@ -1,6 +1,10 @@
 *.cpp linguist-detectable=true
 *.hpp linguist-detectable=true
 *.py linguist-detectable=true
+
 *.make linguist-detectable=false
 Makefile linguist-detectable=false
 *.cmake linguist-detectable=false
+*.sh linguist-detectable=false
+*.zsh linguist-detectable=false
+*.bash linguist-detectable=false
