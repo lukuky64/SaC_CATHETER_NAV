@@ -1,1 +1,2 @@
 *.mk linguist-vendored
+*.py linguist-detectable=false
