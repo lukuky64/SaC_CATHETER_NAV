@@ -11,7 +11,7 @@
 
 ```bash
 cd ~/catkin_ws/src
-git clone git@github.com:lukuky64/sensors_and_control.git
+git clone git@github.com:lukuky64/SaC_CATHETER_NAV.git
 ```
 
 ---
