@@ -11,4 +11,5 @@ Makefile linguist-detectable=false
 *.c linguist-detectable=false
 *.py linguist-detectable=false
 *.pc.py linguist-detectable=false
+*.context.pc.py linguist-detectable=false
 
