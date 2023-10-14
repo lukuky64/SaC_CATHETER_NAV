@@ -20,12 +20,11 @@
 #include <chrono>
 #include <Eigen/Geometry>
 
-
 class sensorPublish
 {
 public:
     // Constructor: Initialises the sensorPublish class
-    sensorPublish(ros::NodeHandle& nh, std::string baseFile_);
+    sensorPublish(ros::NodeHandle &nh, std::string baseFile_);
 
     // Destructor: Cleans up resources used by the sensorPublish class
     ~sensorPublish();
@@ -46,7 +45,7 @@ public:
     sensor_msgs::ImagePtr readImage(int count_);
 
     // Checks if a file exists at the given path and returns a boolean result
-    bool fileExists(const std::string& filename);
+    bool fileExists(const std::string &filename);
 
     // Reads an EM data file based on the count and returns a PoseWithCovarianceStamped message
     geometry_msgs::PoseWithCovarianceStamped readEM(int count_);
@@ -67,18 +66,17 @@ public:
     void setPaused_state(bool state);
 
     // calculates quaternion values for a line drawn between two points
-    Eigen::Quaterniond calculateRotation(const Eigen::Vector3d& point1, const Eigen::Vector3d& point2);
+    Eigen::Quaterniond calculateRotation(const Eigen::Vector3d &point1, const Eigen::Vector3d &point2);
 
 private:
-    ros::NodeHandle nh_;               // ROS NodeHandle for managing ROS-related operations
-    ros::Publisher image_pub_;         // ROS Publisher for image messages
-    ros::Publisher EM_pub_;            // ROS Publisher for EM PoseWithCovarianceStamped messages
-    int totalDataCount_;               // Total count of data points (for images and EM data)
-    std::string folderDirectory_;      // Directory path where data files are located
-    ros::Time current_time;            // Current ROS time
-    int refresh_rate;                  // Rate at which messages are published
-    bool paused_;                      // Reflects the state of the publisher, paused or playing
-    //ros::ServiceServer paused_service; // service that changes the paused_ state variable
+    ros::NodeHandle nh_;          // ROS NodeHandle for managing ROS-related operations
+    ros::Publisher image_pub_;    // ROS Publisher for image messages
+    ros::Publisher EM_pub_;       // ROS Publisher for EM PoseWithCovarianceStamped messages
+    int totalDataCount_;          // Total count of data points (for images and EM data)
+    std::string folderDirectory_; // Directory path where data files are located
+    int refresh_rate;             // Rate at which messages are published
+    bool paused_;                 // Reflects the state of the publisher, paused or playing
+    // ros::ServiceServer paused_service; // service that changes the paused_ state variable
 
     Eigen::Vector3d current_position_;
     Eigen::Vector3d previous_position_;

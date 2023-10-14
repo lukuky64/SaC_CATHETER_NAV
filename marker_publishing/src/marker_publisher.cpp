@@ -2,7 +2,7 @@
 
 PoseToMarker::PoseToMarker(ros::NodeHandle &nh)
 {
-    pose_subscriber_ = nh.subscribe("/em_odometry", 10, &PoseToMarker::poseCallback, this);
+    pose_subscriber_ = nh.subscribe("/em_filtered_odometry", 10, &PoseToMarker::poseCallback, this);
     arrow_marker_publisher_ = nh.advertise<visualization_msgs::MarkerArray>("/arrow_marker_array", 10, true);
     line_strip_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/line_marker_array", 10, true);
     sphere_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/catheter_marker", 10, true);
@@ -106,7 +106,7 @@ void PoseToMarker::createLineMarker(const geometry_msgs::PoseWithCovarianceStamp
 
     // LINE_STRIP settings
     line_strip_marker.scale.x = 0.08;
-    line_strip_marker.color.g = 1.0;
+    line_strip_marker.color.g = 1.0; // setting colour to green
     line_strip_marker.color.a = 1.0;  // Opacity
 
     geometry_msgs::Point point;

@@ -86,26 +86,23 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
             msg.pose.pose.position.z = values[2];
 
             // !!! Currently, given quaternion data is not useful so we will need to interpolate between points instead
-            current_position_ << static_cast<double>(values[0]), static_cast<double>(values[1]), static_cast<double>(values[2]);
-            current_quaternion_ = calculateRotation(current_position_, previous_position_);
-            previous_position_ = current_position_;
+            // current_position_ << static_cast<double>(values[0]), static_cast<double>(values[1]), static_cast<double>(values[2]);
+            // current_quaternion_ = calculateRotation(current_position_, previous_position_);
+            // previous_position_ = current_position_;
 
-            msg.pose.pose.orientation.x = current_quaternion_.x();
-            msg.pose.pose.orientation.y = current_quaternion_.y();
-            msg.pose.pose.orientation.z =current_quaternion_.z();
-            msg.pose.pose.orientation.w = current_quaternion_.w();
-            
-            // msg.pose.pose.orientation.x = values[3];
-            // msg.pose.pose.orientation.y = values[4];
-            // msg.pose.pose.orientation.z = values[6];
-            // msg.pose.pose.orientation.w = values[5]; // need to get the ordering correct, but this one should be right
+            // msg.pose.pose.orientation.x = current_quaternion_.x();
+            // msg.pose.pose.orientation.y = current_quaternion_.y();
+            // msg.pose.pose.orientation.z = current_quaternion_.z();
+            // msg.pose.pose.orientation.w = current_quaternion_.w();
+
+            msg.pose.pose.orientation.x = values[3];
+            msg.pose.pose.orientation.y = values[4];
+            msg.pose.pose.orientation.z = values[6];
+            msg.pose.pose.orientation.w = values[5]; // need to get the ordering correct, but this one should be right
         }
 
         // sensorPublish::getCovariance(&msg, count_);
-
-        current_time = ros::Time::now();
-        msg.header.stamp.sec = current_time.sec;
-        msg.header.stamp.nsec = current_time.nsec;
+        msg.header.stamp = ros::Time::now();
         msg.header.frame_id = "world";
     }
     return msg;
@@ -147,9 +144,10 @@ void sensorPublish::EMPublish(geometry_msgs::PoseWithCovarianceStamped msg)
     EM_pub_.publish(msg);
 }
 
-Eigen::Quaterniond sensorPublish::calculateRotation(const Eigen::Vector3d& point1, const Eigen::Vector3d& point2) {
+Eigen::Quaterniond sensorPublish::calculateRotation(const Eigen::Vector3d &point1, const Eigen::Vector3d &point2)
+{
     // Calculate unit vectors for the original and target directions
-    Eigen::Vector3d originalDirection = Eigen::Vector3d(1.0, 0.0, 0.0);  // Assuming original direction is along the x-axis
+    Eigen::Vector3d originalDirection = Eigen::Vector3d(1.0, 0.0, 0.0); // Assuming original direction is along the x-axis
     Eigen::Vector3d targetDirection = (point2 - point1).normalized();
 
     // Calculate rotation axis and angle
