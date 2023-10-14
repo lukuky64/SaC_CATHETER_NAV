@@ -1,2 +1,2 @@
 *.mk linguist-vendored
-*.py linguist-detectable=false
+*.Make linguist-detectable=false
