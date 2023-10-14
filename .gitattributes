@@ -1,1 +1,1 @@
-*.mk -linguist-detectable
+*.mk linguist-vendored
