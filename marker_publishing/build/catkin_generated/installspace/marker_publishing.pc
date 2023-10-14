@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: marker_publishing
-Description: Description of marker_publishing
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

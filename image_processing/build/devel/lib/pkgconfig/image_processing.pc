@@ -1,8 +1,0 @@
-prefix=/home/lukuky64/catkin_ws/src/sensors_and_control/image_processing/build/devel
-
-Name: image_processing
-Description: Description of image_processing
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

@@ -1,8 +1,0 @@
-prefix=/home/lukuky64/catkin_ws/src/sensors_and_control/main/build/devel
-
-Name: main
-Description: Description of main
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

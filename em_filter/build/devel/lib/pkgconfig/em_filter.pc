@@ -1,8 +1,0 @@
-prefix=/home/lukuky64/catkin_ws/src/SaC_CATHETER_NAV/em_filter/build/devel
-
-Name: em_filter
-Description: Description of em_filter
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
