@@ -67,7 +67,7 @@ def image_callback(img_msg):
 
 # Publisher and Subscriber
 image_sub = rospy.Subscriber(IMAGE_TOPIC, Image, image_callback)
-prediction_pub = rospy.Publisher(PREDICTION_TOPIC, Float64MultiArray, queue_size=10)
+prediction_pub = rospy.Publisher(PREDICTION_TOPIC, Float64MultiArray, queue_size=10, latch=True)
 
 if __name__ == '__main__':
     try:

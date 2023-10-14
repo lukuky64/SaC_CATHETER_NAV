@@ -3,8 +3,8 @@
 // Constructor
 sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh), paused_(true)
 {
-    image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10);
-    EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10);
+    image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10, true);
+    EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10, true);
     sensorPublish::setupFileRead(baseFile_);
     refresh_rate = 30;
 }

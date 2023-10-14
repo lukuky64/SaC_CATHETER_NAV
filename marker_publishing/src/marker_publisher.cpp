@@ -3,9 +3,9 @@
 PoseToMarker::PoseToMarker(ros::NodeHandle &nh)
 {
     pose_subscriber_ = nh.subscribe("/em_odometry", 10, &PoseToMarker::poseCallback, this);
-    arrow_marker_publisher_ = nh.advertise<visualization_msgs::MarkerArray>("/arrow_marker_array", 10);
-    line_strip_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/line_marker_array", 10);
-    sphere_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/catheter_marker", 10);
+    arrow_marker_publisher_ = nh.advertise<visualization_msgs::MarkerArray>("/arrow_marker_array", 10, true);
+    line_strip_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/line_marker_array", 10, true);
+    sphere_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/catheter_marker", 10, true);
     markerLimit_ = 2002;
 
     ROS_INFO("Starting publishing markers...");

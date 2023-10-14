@@ -7,7 +7,7 @@ resize_(128), catheter_size(40)
     // Initialize the subscriber (!!!figure out what we want the queue size to be)
     calculateMasks(784,784);
     image_sub_ = nh_.subscribe("raw_image_topic", 10, &ImageProcessor::imageCallback, this);
-    image_pub_ = nh_.advertise<sensor_msgs::Image>("processed_image", 10);
+    image_pub_ = nh_.advertise<sensor_msgs::Image>("processed_image", 10, true);
 }   
 
 // Destructor
