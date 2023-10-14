@@ -9,6 +9,7 @@ Makefile linguist-detectable=false
 *.zsh linguist-detectable=false
 *.bash linguist-detectable=false
 *.c linguist-detectable=false
+
 image_processing/catkin_generated linguist-vendored
 sensor_publishing/catkin_generated linguist-vendored
 centre_prediction/catkin_generated linguist-vendored
