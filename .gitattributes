@@ -1,2 +1,2 @@
 *.mk linguist-vendored
-*.Make linguist-detectable=false
+*.mk linguist-detectable=false
