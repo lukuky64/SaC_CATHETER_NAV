@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
+find_package(Eigen3 REQUIRED)
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES em_filter
@@ -28,8 +30,12 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIR}
 )
 
 add_executable(${PROJECT_NAME}_node src/filter.cpp)
 
-target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES})  # Added this
+target_link_libraries(${PROJECT_NAME}_node
+  ${catkin_LIBRARIES}
+  Eigen3::Eigen  # Eigen3 target
+)
