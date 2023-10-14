@@ -11,4 +11,4 @@ Makefile linguist-detectable=false
 *.c linguist-detectable=false
 *.py linguist-detectable=false
 
-centre_prediction/src/*.py linguist-detectable=true
+
