@@ -18,7 +18,7 @@
 #include <boost/bind.hpp>
 #include <thread>
 #include <chrono>
-
+#include <Eigen/Geometry>
 
 
 class sensorPublish
@@ -63,7 +63,11 @@ public:
     // getter for paused_ variable
     bool getPaused_state();
 
+    // setter for paused_ variable
     void setPaused_state(bool state);
+
+    // calculates quaternion values for a line drawn between two points
+    Eigen::Quaterniond calculateRotation(const Eigen::Vector3d& point1, const Eigen::Vector3d& point2);
 
 private:
     ros::NodeHandle nh_;               // ROS NodeHandle for managing ROS-related operations
@@ -75,6 +79,10 @@ private:
     int refresh_rate;                  // Rate at which messages are published
     bool paused_;                      // Reflects the state of the publisher, paused or playing
     //ros::ServiceServer paused_service; // service that changes the paused_ state variable
+
+    Eigen::Vector3d current_position_;
+    Eigen::Vector3d previous_position_;
+    Eigen::Quaterniond current_quaternion_;
 };
 
 #endif // IMAGE_PROCESSOR_H

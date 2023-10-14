@@ -1,7 +1,7 @@
 #include "sensor_publisher.h"
 
 // Constructor
-sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh), paused_(true)
+sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh), paused_(true), previous_position_(0.0, 0.0, 0.0)
 {
     image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10, true);
     EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10, true);
@@ -84,10 +84,21 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
             msg.pose.pose.position.x = values[0];
             msg.pose.pose.position.y = values[1];
             msg.pose.pose.position.z = values[2];
-            msg.pose.pose.orientation.x = values[3];
-            msg.pose.pose.orientation.y = values[4];
-            msg.pose.pose.orientation.z = values[6];
-            msg.pose.pose.orientation.w = values[5]; // need to get the ordering correct, but this one should be right
+
+            // !!! Currently, given quaternion data is not useful so we will need to interpolate between points instead
+            current_position_ << static_cast<double>(values[0]), static_cast<double>(values[1]), static_cast<double>(values[2]);
+            current_quaternion_ = calculateRotation(current_position_, previous_position_);
+            previous_position_ = current_position_;
+
+            msg.pose.pose.orientation.x = current_quaternion_.x();
+            msg.pose.pose.orientation.y = current_quaternion_.y();
+            msg.pose.pose.orientation.z =current_quaternion_.z();
+            msg.pose.pose.orientation.w = current_quaternion_.w();
+            
+            // msg.pose.pose.orientation.x = values[3];
+            // msg.pose.pose.orientation.y = values[4];
+            // msg.pose.pose.orientation.z = values[6];
+            // msg.pose.pose.orientation.w = values[5]; // need to get the ordering correct, but this one should be right
         }
 
         // sensorPublish::getCovariance(&msg, count_);
@@ -134,6 +145,21 @@ void sensorPublish::imagePublish(const sensor_msgs::ImagePtr msg)
 void sensorPublish::EMPublish(geometry_msgs::PoseWithCovarianceStamped msg)
 {
     EM_pub_.publish(msg);
+}
+
+Eigen::Quaterniond sensorPublish::calculateRotation(const Eigen::Vector3d& point1, const Eigen::Vector3d& point2) {
+    // Calculate unit vectors for the original and target directions
+    Eigen::Vector3d originalDirection = Eigen::Vector3d(1.0, 0.0, 0.0);  // Assuming original direction is along the x-axis
+    Eigen::Vector3d targetDirection = (point2 - point1).normalized();
+
+    // Calculate rotation axis and angle
+    Eigen::Vector3d rotationAxis = originalDirection.cross(targetDirection).normalized();
+    double angle = std::acos(originalDirection.dot(targetDirection));
+
+    // Create quaternion from axis and angle
+    Eigen::Quaterniond quaternion(Eigen::AngleAxisd(angle, rotationAxis));
+
+    return quaternion;
 }
 
 // Main function

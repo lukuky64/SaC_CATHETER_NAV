@@ -15,6 +15,9 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(OpenCV REQUIRED)
 
+find_package(Eigen3 REQUIRED)
+
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -119,8 +122,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIR}
 )
 
 ## Declare a C++ library
@@ -152,8 +156,11 @@ add_executable(${PROJECT_NAME}_sensor_publisher src/sensor_publisher.cpp)
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-
-target_link_libraries(${PROJECT_NAME}_sensor_publisher ${catkin_LIBRARIES} ${OpenCV_LIBS})  # Added this
+target_link_libraries(${PROJECT_NAME}_sensor_publisher
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+  Eigen3::Eigen  # Eigen3 target
+)
 
 
 #############
