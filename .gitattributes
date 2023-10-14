@@ -1,4 +1,4 @@
-Makefile linguist-generated=true
-CMakeLists.txt linguist-generated=true
-*.cmake linguist-generated=true
-*.mk linguist-generated=true
+*.mk -linguist-detectable
+Makefile -linguist-detectable
+CMakeLists.txt -linguist-detectable
+*.cmake -linguist-detectable
