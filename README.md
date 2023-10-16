@@ -4,6 +4,8 @@
 
 ### Prerequisites
 - Ensure you have ROS and Catkin installed on your system.
+- Ensure you have pcl-conversions installed
+- 
 
 ---
 
