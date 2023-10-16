@@ -3,6 +3,7 @@
 ## Getting Started
 
 ### Prerequisites
+- Ubuntu 20.04 (https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview)
 - ROS
 ```Bash
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
