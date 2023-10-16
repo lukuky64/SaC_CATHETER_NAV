@@ -8,7 +8,7 @@
 - pcl-conversions
 - Python3
 - Tensorflow
-- 
+- libopencv-dev
 
 ---
 
