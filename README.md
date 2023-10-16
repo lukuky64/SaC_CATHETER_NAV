@@ -3,8 +3,11 @@
 ## Getting Started
 
 ### Prerequisites
-- Ensure you have ROS and Catkin installed on your system.
-- Ensure you have pcl-conversions installed
+- ROS
+- Catkin
+- pcl-conversions
+- Python3
+- Tensorflow
 - 
 
 ---
