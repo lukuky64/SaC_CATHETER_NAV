@@ -66,25 +66,25 @@ Visualization Manager:
     - Class: rviz/Marker
       Enabled: true
       Marker Topic: /catheter_marker
-      Name: Marker
+      Name: catheter_sphere
       Namespaces:
         "": true
       Queue Size: 100
       Value: true
-    - Class: rviz/MarkerArray
-      Enabled: false
-      Marker Topic: /arrow_marker_array
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
     - Class: rviz/Marker
       Enabled: true
       Marker Topic: /line_marker_array
-      Name: Marker
+      Name: actual_path
       Namespaces:
         line_strip: true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /arrow_marker
+      Name: Direction_arrow
+      Namespaces:
+        "": true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -131,9 +131,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.08960175514221191
+      Pitch: 0.5453982353210449
       Target Frame: catheter_frame
-      Yaw: 0.45539817214012146
+      Yaw: 0.265398234128952
     Saved: ~
 Window Geometry:
   Displays:

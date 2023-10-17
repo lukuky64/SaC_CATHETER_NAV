@@ -3,7 +3,7 @@
 PoseToMarker::PoseToMarker(ros::NodeHandle &nh)
 {
     pose_subscriber_ = nh.subscribe("/em_filtered_odometry", 10, &PoseToMarker::poseCallback, this);
-    arrow_marker_publisher_ = nh.advertise<visualization_msgs::MarkerArray>("/arrow_marker_array", 10, true);
+    arrow_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/arrow_marker", 10, true);
     line_strip_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/line_marker_array", 10, true);
     sphere_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/catheter_marker", 10, true);
     markerLimit_ = 2002;
@@ -48,6 +48,12 @@ void PoseToMarker::createCatheterMarker(const geometry_msgs::PoseWithCovarianceS
     sphere_marker.pose.position.y = msg->pose.pose.position.y;
     sphere_marker.pose.position.z = msg->pose.pose.position.z;
 
+    // Initialize the quaternion (Identity Quaternion)
+    sphere_marker.pose.orientation.x = 0.0;
+    sphere_marker.pose.orientation.y = 0.0;
+    sphere_marker.pose.orientation.z = 0.0;
+    sphere_marker.pose.orientation.w = 1.0;
+
     // Set other properties of the marker
     sphere_marker.scale.x = 0.3;
     sphere_marker.scale.y = 0.3;
@@ -74,23 +80,23 @@ void PoseToMarker::createArrowMarker(const geometry_msgs::PoseWithCovarianceStam
 
     marker.pose = msg->pose.pose;
 
-    marker.scale.x = 2.0;
-    marker.scale.y = 0.07;
-    marker.scale.z = 0.07;
-    marker.color.a = 1.0;  // Opacity
+    marker.scale.x = 1.4;
+    marker.scale.y = 0.075;
+    marker.scale.z = 0.075;
+    marker.color.a = 0.75;  // Opacity
     marker.color.r = 1.0;
 
-    if (arrow_marker_array_.size() > markerLimit_)
-    {
-        arrow_marker_array_.clear();
-    }
+    // if (arrow_marker_array_.size() > markerLimit_)
+    // {
+    //     arrow_marker_array_.clear();
+    // }
 
-    arrow_marker_array_.push_back(marker);
+    // arrow_marker_array_.push_back(marker);
 
-    visualization_msgs::MarkerArray arrow_marker_array_msg;
-    arrow_marker_array_msg.markers = arrow_marker_array_;
+    // visualization_msgs::MarkerArray arrow_marker_array_msg;
+    // arrow_marker_array_msg.markers = arrow_marker_array_;
 
-    arrow_marker_publisher_.publish(arrow_marker_array_msg);
+    arrow_marker_publisher_.publish(marker);
 }
 
 void PoseToMarker::createLineMarker(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)

@@ -1,7 +1,7 @@
 #include "sensor_publisher.h"
 
 // Constructor
-sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh), paused_(true), previous_position_(0.0, 0.0, 0.0)
+sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(nh), paused_(true), previous_position_(0.0, 0.0, 0.0), current_quaternion_(0.0, 0.0, 0.0, 1.0)
 {
     image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10, true);
     EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10, true);
@@ -63,8 +63,14 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::createPCPose(geometry_ms
     current_position_.y() = msg.pose.pose.position.y;
     current_position_.z() = msg.pose.pose.position.z;
 
-    current_quaternion_ = calculateRotation(current_position_, previous_position_);
-    previous_position_ = current_position_;
+    double dist_ = euclideanDistance(current_position_, previous_position_);
+
+    // to create more reliable quaternion data, only update the quaternion if the distance between the points is greater than 10mm
+    if (dist_ > 1)
+    {
+        current_quaternion_ = calculateRotation(previous_position_, current_position_);
+        previous_position_ = current_position_;
+    }
 
     PC_pose.pose.pose.orientation.x = current_quaternion_.x();
     PC_pose.pose.pose.orientation.y = current_quaternion_.y();
@@ -137,6 +143,11 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
         msg.header.frame_id = "world";
     }
     return msg;
+}
+
+double sensorPublish::euclideanDistance(const Eigen::Vector3d& vec1, const Eigen::Vector3d& vec2)
+{
+    return (vec1 - vec2).norm();
 }
 
 void sensorPublish::getCovariance(geometry_msgs::PoseWithCovarianceStamped &msg, int n)

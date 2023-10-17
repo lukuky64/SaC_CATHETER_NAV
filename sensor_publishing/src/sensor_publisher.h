@@ -19,6 +19,7 @@
 #include <thread>
 #include <chrono>
 #include <Eigen/Geometry>
+#include <Eigen/Dense>
 #include <tf2/LinearMath/Quaternion.h>
 
 class sensorPublish
@@ -73,6 +74,8 @@ public:
     Eigen::Quaterniond calculateRotation(const Eigen::Vector3d &point1, const Eigen::Vector3d &point2);
 
     geometry_msgs::PoseWithCovarianceStamped createPCPose(geometry_msgs::PoseWithCovarianceStamped msg);
+
+    double euclideanDistance(const Eigen::Vector3d& vec1, const Eigen::Vector3d& vec2);
 
 private:
     ros::NodeHandle nh_;          // ROS NodeHandle for managing ROS-related operations
