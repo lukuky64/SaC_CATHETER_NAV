@@ -49,9 +49,9 @@ void PoseToMarker::createCatheterMarker(const geometry_msgs::PoseWithCovarianceS
     sphere_marker.pose.position.z = msg->pose.pose.position.z;
 
     // Set other properties of the marker
-    sphere_marker.scale.x = 0.5;
-    sphere_marker.scale.y = 0.5;
-    sphere_marker.scale.z = 0.5;
+    sphere_marker.scale.x = 0.3;
+    sphere_marker.scale.y = 0.3;
+    sphere_marker.scale.z = 0.3;
     sphere_marker.color.r = 1.0;
     sphere_marker.color.a = 1.0;  // Opacity
 
@@ -74,9 +74,9 @@ void PoseToMarker::createArrowMarker(const geometry_msgs::PoseWithCovarianceStam
 
     marker.pose = msg->pose.pose;
 
-    marker.scale.x = 3.0;
-    marker.scale.y = 0.1;
-    marker.scale.z = 0.1;
+    marker.scale.x = 2.0;
+    marker.scale.y = 0.07;
+    marker.scale.z = 0.07;
     marker.color.a = 1.0;  // Opacity
     marker.color.r = 1.0;
 

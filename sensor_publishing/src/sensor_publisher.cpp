@@ -5,6 +5,7 @@ sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(n
 {
     image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10, true);
     EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10, true);
+    PCP_Pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("point_cloud_odometry", 10, true);
     sensorPublish::setupFileRead(baseFile_);
     refresh_rate = 30;
 }
@@ -54,6 +55,25 @@ sensor_msgs::ImagePtr sensorPublish::readImage(int count_)
     return msg;
 }
 
+geometry_msgs::PoseWithCovarianceStamped sensorPublish::createPCPose(geometry_msgs::PoseWithCovarianceStamped msg)
+{
+    geometry_msgs::PoseWithCovarianceStamped PC_pose = msg;
+
+    current_position_.x() = msg.pose.pose.position.x;
+    current_position_.y() = msg.pose.pose.position.y;
+    current_position_.z() = msg.pose.pose.position.z;
+
+    current_quaternion_ = calculateRotation(current_position_, previous_position_);
+    previous_position_ = current_position_;
+
+    PC_pose.pose.pose.orientation.x = current_quaternion_.x();
+    PC_pose.pose.pose.orientation.y = current_quaternion_.y();
+    PC_pose.pose.pose.orientation.z = current_quaternion_.z();
+    PC_pose.pose.pose.orientation.w = current_quaternion_.w();
+
+    return PC_pose;
+}
+
 geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
 {
     geometry_msgs::PoseWithCovarianceStamped msg;
@@ -95,10 +115,21 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
             // msg.pose.pose.orientation.z = current_quaternion_.z();
             // msg.pose.pose.orientation.w = current_quaternion_.w();
 
-            msg.pose.pose.orientation.x = values[3];
-            msg.pose.pose.orientation.y = values[4];
-            msg.pose.pose.orientation.z = values[6];
-            msg.pose.pose.orientation.w = values[5]; // need to get the ordering correct, but this one should be right
+            //tf2::Quaternion original_q(values[3], values[4], values[5], values[6]);
+            //tf2::Quaternion offset_q(0, 0, 0, 1);
+
+            //tf2::Quaternion new_q = offset_q * original_q;
+            //new_q.normalize();
+
+            msg.pose.pose.orientation.x = values[3]; // new_q.x();
+            msg.pose.pose.orientation.y = values[4]; // new_q.y();
+            msg.pose.pose.orientation.z = values[5]; // new_q.z();
+            msg.pose.pose.orientation.w = values[6]; // new_q.w();
+
+            // msg.pose.pose.orientation.x = values[3];
+            // msg.pose.pose.orientation.y = values[4] * (0.7071068);
+            // msg.pose.pose.orientation.z = values[6];
+            // msg.pose.pose.orientation.w = values[5] * (0.7071068); // need to get the ordering correct, but this one should be right
         }
 
         // sensorPublish::getCovariance(&msg, count_);
@@ -144,6 +175,11 @@ void sensorPublish::EMPublish(geometry_msgs::PoseWithCovarianceStamped msg)
     EM_pub_.publish(msg);
 }
 
+void sensorPublish::PCPPublish(geometry_msgs::PoseWithCovarianceStamped msg)
+{
+    PCP_Pub_.publish(msg);
+}
+
 Eigen::Quaterniond sensorPublish::calculateRotation(const Eigen::Vector3d &point1, const Eigen::Vector3d &point2)
 {
     // Calculate unit vectors for the original and target directions
@@ -187,6 +223,7 @@ int main(int argc, char *argv[])
     int count = 0;
     sensor_msgs::ImagePtr USmsg;
     geometry_msgs::PoseWithCovarianceStamped EMmsg;
+    geometry_msgs::PoseWithCovarianceStamped PCmsg;
 
     std::this_thread::sleep_for(std::chrono::seconds(5)); // wait a bit before publishing so RVIZ and other programs can load
 
@@ -195,7 +232,8 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         USmsg = up.readImage(count);
-        EMmsg = up.readEM(count);
+        PCmsg = up.readEM(count);
+        EMmsg = up.createPCPose(PCmsg);
 
         if ((USmsg != nullptr) || (EMmsg.header.frame_id != "invalid"))
         {
@@ -209,6 +247,12 @@ int main(int argc, char *argv[])
             {
                 ROS_DEBUG_STREAM("Publishing EM odometry...." << count);
                 up.EMPublish(EMmsg);
+            }
+
+            if (!(PCmsg.header.frame_id == "invalid"))
+            {
+                ROS_DEBUG_STREAM("Publishing PC odometry...." << count);
+                up.PCPPublish(PCmsg);
             }
 
             count++;

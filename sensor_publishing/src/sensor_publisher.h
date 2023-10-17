@@ -19,6 +19,7 @@
 #include <thread>
 #include <chrono>
 #include <Eigen/Geometry>
+#include <tf2/LinearMath/Quaternion.h>
 
 class sensorPublish
 {
@@ -34,6 +35,9 @@ public:
 
     // Publishes an EM PoseWithCovarianceStamped message
     void EMPublish(geometry_msgs::PoseWithCovarianceStamped msg);
+
+    // Publishes a Point Cloud orientation PoseWithCovarianceStamped message
+    void PCPPublish(geometry_msgs::PoseWithCovarianceStamped msg);
 
     // Returns the total number of images/data points for iteration
     int getTotalDataCount();
@@ -68,10 +72,13 @@ public:
     // calculates quaternion values for a line drawn between two points
     Eigen::Quaterniond calculateRotation(const Eigen::Vector3d &point1, const Eigen::Vector3d &point2);
 
+    geometry_msgs::PoseWithCovarianceStamped createPCPose(geometry_msgs::PoseWithCovarianceStamped msg);
+
 private:
     ros::NodeHandle nh_;          // ROS NodeHandle for managing ROS-related operations
     ros::Publisher image_pub_;    // ROS Publisher for image messages
     ros::Publisher EM_pub_;       // ROS Publisher for EM PoseWithCovarianceStamped messages
+    ros::Publisher PCP_Pub_;      // ROS Publisher for Point Cloud orientation PoseWithCovarianceStamped messages
     int totalDataCount_;          // Total count of data points (for images and EM data)
     std::string folderDirectory_; // Directory path where data files are located
     int refresh_rate;             // Rate at which messages are published
