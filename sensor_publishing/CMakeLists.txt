@@ -8,6 +8,8 @@ project(sensor_publishing)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  pcl_conversions
+  pcl_ros
   cv_bridge
   roscpp
   sensor_msgs
@@ -109,10 +111,12 @@ find_package(Eigen3 REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES sensor_publishing
-#  CATKIN_DEPENDS roscpp sensor_msgs
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES sensor_publishing
+  CATKIN_DEPENDS roscpp sensor_msgs
+  DEPENDS system_lib
+  pcl_conversions
+  pcl_ros  
 )
 
 ###########
@@ -140,7 +144,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_sensor_publisher src/sensor_publisher.cpp)
+add_executable(${PROJECT_NAME}_sensor_publisher src/sensor_publisher.cpp src/point_cloud_processor.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

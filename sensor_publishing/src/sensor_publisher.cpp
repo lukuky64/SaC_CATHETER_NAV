@@ -6,6 +6,7 @@ sensorPublish::sensorPublish(ros::NodeHandle &nh, std::string baseFile_) : nh_(n
     image_pub_ = nh_.advertise<sensor_msgs::Image>("raw_image_topic", 10, true);
     EM_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("em_odometry", 10, true);
     PCP_Pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("point_cloud_odometry", 10, true);
+    pcl_pub_ = nh_.advertise<sensor_msgs::PointCloud2>("/point_cloud_topic", 10, true);
     sensorPublish::setupFileRead(baseFile_);
     refresh_rate = 30;
 }
@@ -33,6 +34,43 @@ bool sensorPublish::setState(std_srvs::SetBool::Request &req, std_srvs::SetBool:
     res.success = true;
     res.message = "Successfully set state";
     return true;
+}
+
+sensor_msgs::PointCloud2 sensorPublish::readContour(int count_, geometry_msgs::PoseWithCovarianceStamped pose)
+{
+    sensor_msgs::PointCloud2 msg;
+    std::string contour_path = folderDirectory_ + "Contours/" + std::to_string(count_) + ".txt";
+
+    std::vector<Eigen::Vector2d> contours;
+
+    if (!fileExists(contour_path))
+    {
+        ROS_WARN("File does not exist: %s, are you in the correct folder?", contour_path.c_str());
+        msg.header.frame_id = "invalid"; // Using flag to indicate an error
+        return msg;
+    }
+
+    std::ifstream file(contour_path);
+    std::string line;
+    if (std::getline(file, line))
+    {
+        std::istringstream ss(line);
+        std::string value;
+        std::vector<float> values;
+
+        while (std::getline(ss, value, ' '))
+        {
+            float x_val = std::stof(value);
+            std::getline(ss, value, ' ');
+            float y_val = std::stof(value);
+            contours.push_back(Eigen::Vector2d(x_val, y_val));
+        }
+
+        msg = pCloudProcessor.createPointCloud(contours, pose);
+        msg.header.stamp = ros::Time::now();
+        msg.header.frame_id = "world";
+    }
+    return msg;
 }
 
 sensor_msgs::ImagePtr sensorPublish::readImage(int count_)
@@ -121,11 +159,11 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
             // msg.pose.pose.orientation.z = current_quaternion_.z();
             // msg.pose.pose.orientation.w = current_quaternion_.w();
 
-            //tf2::Quaternion original_q(values[3], values[4], values[5], values[6]);
-            //tf2::Quaternion offset_q(0, 0, 0, 1);
+            // tf2::Quaternion original_q(values[3], values[4], values[5], values[6]);
+            // tf2::Quaternion offset_q(0, 0, 0, 1);
 
-            //tf2::Quaternion new_q = offset_q * original_q;
-            //new_q.normalize();
+            // tf2::Quaternion new_q = offset_q * original_q;
+            // new_q.normalize();
 
             msg.pose.pose.orientation.x = values[3]; // new_q.x();
             msg.pose.pose.orientation.y = values[4]; // new_q.y();
@@ -145,7 +183,7 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
     return msg;
 }
 
-double sensorPublish::euclideanDistance(const Eigen::Vector3d& vec1, const Eigen::Vector3d& vec2)
+double sensorPublish::euclideanDistance(const Eigen::Vector3d &vec1, const Eigen::Vector3d &vec2)
 {
     return (vec1 - vec2).norm();
 }
@@ -189,6 +227,11 @@ void sensorPublish::EMPublish(geometry_msgs::PoseWithCovarianceStamped msg)
 void sensorPublish::PCPPublish(geometry_msgs::PoseWithCovarianceStamped msg)
 {
     PCP_Pub_.publish(msg);
+}
+
+void sensorPublish::CloudPublish(sensor_msgs::PointCloud2 msg)
+{
+    pcl_pub_.publish(msg);
 }
 
 Eigen::Quaterniond sensorPublish::calculateRotation(const Eigen::Vector3d &point1, const Eigen::Vector3d &point2)
@@ -235,6 +278,7 @@ int main(int argc, char *argv[])
     sensor_msgs::ImagePtr USmsg;
     geometry_msgs::PoseWithCovarianceStamped EMmsg;
     geometry_msgs::PoseWithCovarianceStamped PCmsg;
+    sensor_msgs::PointCloud2 Cloudmsg;
 
     std::this_thread::sleep_for(std::chrono::seconds(5)); // wait a bit before publishing so RVIZ and other programs can load
 
@@ -245,6 +289,7 @@ int main(int argc, char *argv[])
         USmsg = up.readImage(count);
         PCmsg = up.readEM(count);
         EMmsg = up.createPCPose(PCmsg);
+        Cloudmsg = up.readContour(count, PCmsg);
 
         if ((USmsg != nullptr) || (EMmsg.header.frame_id != "invalid"))
         {
@@ -264,6 +309,12 @@ int main(int argc, char *argv[])
             {
                 ROS_DEBUG_STREAM("Publishing PC odometry...." << count);
                 up.PCPPublish(PCmsg);
+            }
+
+            if (!(Cloudmsg.header.frame_id == "invalid"))
+            {
+                ROS_DEBUG_STREAM("Publishing PC odometry...." << count);
+                up.CloudPublish(Cloudmsg);
             }
 
             count++;

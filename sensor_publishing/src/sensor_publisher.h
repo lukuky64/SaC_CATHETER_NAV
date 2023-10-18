@@ -22,6 +22,9 @@
 #include <Eigen/Dense>
 #include <tf2/LinearMath/Quaternion.h>
 
+// incuding other class
+#include "point_cloud_processor.h"
+
 class sensorPublish
 {
 public:
@@ -40,6 +43,9 @@ public:
     // Publishes a Point Cloud orientation PoseWithCovarianceStamped message
     void PCPPublish(geometry_msgs::PoseWithCovarianceStamped msg);
 
+    // Publishes a Point Cloud message
+    void CloudPublish(sensor_msgs::PointCloud2 msg);
+
     // Returns the total number of images/data points for iteration
     int getTotalDataCount();
 
@@ -48,6 +54,9 @@ public:
 
     // Reads an image file based on the count and returns an ImagePtr message
     sensor_msgs::ImagePtr readImage(int count_);
+
+    // Reads a contour file based on the count and returns a vector of Eigen::Vector2d points
+    sensor_msgs::PointCloud2 readContour(int count_, geometry_msgs::PoseWithCovarianceStamped pose);
 
     // Checks if a file exists at the given path and returns a boolean result
     bool fileExists(const std::string &filename);
@@ -82,6 +91,7 @@ private:
     ros::Publisher image_pub_;    // ROS Publisher for image messages
     ros::Publisher EM_pub_;       // ROS Publisher for EM PoseWithCovarianceStamped messages
     ros::Publisher PCP_Pub_;      // ROS Publisher for Point Cloud orientation PoseWithCovarianceStamped messages
+    ros::Publisher pcl_pub_;      // ROS Publisher for Point Cloud messages
     int totalDataCount_;          // Total count of data points (for images and EM data)
     std::string folderDirectory_; // Directory path where data files are located
     int refresh_rate;             // Rate at which messages are published
@@ -91,6 +101,10 @@ private:
     Eigen::Vector3d current_position_;
     Eigen::Vector3d previous_position_;
     Eigen::Quaterniond current_quaternion_;
+
+    // Point cloud variables
+    std::vector<Eigen::Vector2d> contours_; // for storing 2D contours
+    PointCloudProcessor pCloudProcessor; // for creating a point cloud
 };
 
 #endif // IMAGE_PROCESSOR_H
