@@ -3,7 +3,7 @@
 
 PointCloudProcessor::PointCloudProcessor()
 {
-  cloud_.height = 1; // unorganized point cloud
+  cloud_.height = 1;      // unorganized point cloud
   cloud_.is_dense = true; // all points are finite (not inf, nan, etc.)
 }
 
@@ -29,10 +29,48 @@ std::vector<Eigen::Vector3d> PointCloudProcessor::projectContours(std::vector<Ei
   return projectedContours_;
 }
 
+void PointCloudProcessor::saveProjectedContoursToFile(const std::vector<Eigen::Vector3d> &projectedContours_, const std::string &filename)
+{
+  // Create an output file stream
+  std::ofstream outfile(filename, std::ios::app);
+
+  // Check if the file is open
+  if (!outfile.is_open())
+  {
+    std::cerr << "Failed to open file: " << filename << std::endl;
+    return;
+  }
+
+  // Write each vector to the file
+  for (const auto &vec : projectedContours_)
+  {
+    outfile << vec[0] << " " << vec[1] << " " << vec[2] << std::endl;
+  }
+
+  // Close the file
+  outfile.close();
+}
+
+std::string PointCloudProcessor::vectorToString(const std::vector<Eigen::Vector2d> &vec)
+{
+  std::ostringstream oss;
+  for (const auto &v : vec)
+  {
+    oss << "SIZE[" << vec.size() << "] - " << "(" << v[0] << ", " << v[1] << ") ";
+  }
+  return oss.str();
+}
+
 sensor_msgs::PointCloud2 PointCloudProcessor::createPointCloud(std::vector<Eigen::Vector2d> contours, geometry_msgs::PoseWithCovarianceStamped pose)
 {
   // Project the incoming contours to the global frame
   std::vector<Eigen::Vector3d> projectedContours_ = projectContours(contours, pose);
+
+  // DEBUGGING
+  //std::string allContours = vectorToString(contours);
+  //ROS_INFO("All Projected Contours: %s", allContours.c_str());
+
+  // saveProjectedContoursToFile(projectedContours_, "projected_contours.txt");
 
   // Determine the starting index for new points in cloud_
   size_t startIndex = cloud_.points.size();

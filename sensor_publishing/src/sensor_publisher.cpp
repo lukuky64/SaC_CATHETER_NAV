@@ -58,12 +58,20 @@ sensor_msgs::PointCloud2 sensorPublish::readContour(int count_, geometry_msgs::P
         std::string value;
         std::vector<float> values;
 
-        while (std::getline(ss, value, ' '))
+        while (std::getline(file, line)) // Loop to read each line until end of file
         {
-            float x_val = std::stof(value);
-            std::getline(ss, value, ' ');
-            float y_val = std::stof(value);
-            contours.push_back(Eigen::Vector2d(x_val, y_val));
+            std::istringstream ss(line);
+            std::string value;
+            float x_val, y_val;
+
+            if (ss >> x_val && ss >> y_val) // Read x and y values from the line
+            {
+                contours.push_back(Eigen::Vector2d(x_val, y_val));
+            }
+            else
+            {
+                ROS_WARN("Failed to parse line: %s", line.c_str());
+            }
         }
 
         msg = pCloudProcessor.createPointCloud(contours, pose);

@@ -8,6 +8,11 @@
 #include <Eigen/Core>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
 
+// debugging headers
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 class PointCloudProcessor
 {
 public:
@@ -19,6 +24,10 @@ public:
 
   // projects a vector of 2D contours to 3D space
   std::vector<Eigen::Vector3d> projectContours(std::vector<Eigen::Vector2d> contours, geometry_msgs::PoseWithCovarianceStamped pose);
+
+  void saveProjectedContoursToFile(const std::vector<Eigen::Vector3d>& projectedContours_, const std::string& filename);
+
+  std::string vectorToString(const std::vector<Eigen::Vector2d>& vec);
 
 private:
   ros::NodeHandle nh_;
