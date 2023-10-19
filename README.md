@@ -57,7 +57,9 @@ source devel/setup.bash
 
 ## Running the Main Simulation
 <details>
+ 
 1. Set the environment variable (replace the path in the quotes with the path to your `data folder`):
+ 
 ```bash
 export MY_PATH="/home/lukuky64/Desktop/Aortic_catheter_project"
 ```
