@@ -3,6 +3,8 @@
 ## Getting Started
 
 ### Prerequisites
+<details>
+ 
 - Ubuntu 20.04 (https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview)
 - ROS
 ```Bash
@@ -33,19 +35,17 @@ pip3 install tensorflow
 sudo apt-get install libopencv-dev
 ```
 ---
+</details>
 
-### Clone the Repository in your catkin workspace
+### Clone the Repository in your catkin workspace and build:
+<details>
  
 ```bash
 cd ~/catkin_ws/src
 git clone git@github.com:lukuky64/SaC_CATHETER_NAV.git
 ```
 
----
-
-### Build the Files
-
-1. Navigate to your Catkin workspace and build the project:
+Navigate to your Catkin workspace and build the project:
 
 ```bash
 cd ~/catkin_ws
@@ -53,10 +53,10 @@ catkin_make
 source devel/setup.bash
 ```
 
----
+</details>
 
 ## Running the Main Simulation
-
+<details>
 1. Set the environment variable (replace the path in the quotes with the path to your `data folder`):
 ```bash
 export MY_PATH="/home/lukuky64/Desktop/Aortic_catheter_project"
@@ -77,4 +77,4 @@ To pause again:
 ```Bash
 rosservice call /set_paused "data: true" 
 ```
-
+</details>
