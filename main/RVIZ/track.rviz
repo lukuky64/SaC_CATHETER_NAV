@@ -87,7 +87,7 @@ Visualization Manager:
         "": true
       Queue Size: 100
       Value: true
-    - Alpha: 1
+    - Alpha: 0.800000011920929
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
         Max Value: 10
@@ -97,7 +97,7 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: RGB8
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -106,10 +106,10 @@ Visualization Manager:
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 10
-      Selectable: true
+      Selectable: false
       Size (Pixels): 3
-      Size (m): 0.20000000298023224
-      Style: Flat Squares
+      Size (m): 0.4000000059604645
+      Style: Spheres
       Topic: /point_cloud_topic
       Unreliable: false
       Use Fixed Frame: true
@@ -143,7 +143,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 40.10469436645508
+      Distance: 55.6973991394043
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -159,9 +159,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.029601670801639557
+      Pitch: 0.08039858192205429
       Target Frame: catheter_frame
-      Yaw: 4.818582057952881
+      Yaw: 2.0403971672058105
     Saved: ~
 Window Geometry:
   Displays:
@@ -181,5 +181,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1200
-  X: 88
+  X: 140
   Y: -32
