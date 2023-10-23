@@ -2,20 +2,27 @@
 
 PoseToMarker::PoseToMarker(ros::NodeHandle &nh)
 {
+    //pc_pose_subscriber_ = nh.subscribe("/point_cloud_filtered_odometry", 10, &PoseToMarker::pcPoseCallback, this);
     pose_subscriber_ = nh.subscribe("/em_filtered_odometry", 10, &PoseToMarker::poseCallback, this);
+    prediction_subscriber_ = nh.subscribe("/prediction", 10, &PoseToMarker::predictionCallback, this);
     arrow_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/arrow_marker", 10, true);
-    line_strip_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/line_marker_array", 10, true);
+    pose_line_strip_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/line_marker_array", 10, true);
+    predict_line_strip_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/predict_marker_array", 10, true);
     sphere_marker_publisher_ = nh.advertise<visualization_msgs::Marker>("/catheter_marker", 10, true);
     markerLimit_ = 2002;
 
     ROS_INFO("Starting publishing markers...");
 }
 
+void PoseToMarker::predictionCallback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
+{
+    PoseToMarker::createPredictionLineMarker(msg);
+}
 
 void PoseToMarker::poseCallback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
 {
     PoseToMarker::createArrowMarker(msg);
-    PoseToMarker::createLineMarker(msg);
+    PoseToMarker::createPoseLineMarker(msg);
     PoseToMarker::createCatheterMarker(msg);
 
     // Publish tf transform for the frame
@@ -31,7 +38,6 @@ void PoseToMarker::poseCallback(const geometry_msgs::PoseWithCovarianceStamped::
     catheter_tf.setRotation(q);
     br.sendTransform(tf::StampedTransform(catheter_tf, ros::Time::now(), "world", "catheter_frame"));
 }
-
 
 void PoseToMarker::createCatheterMarker(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
 {
@@ -59,14 +65,11 @@ void PoseToMarker::createCatheterMarker(const geometry_msgs::PoseWithCovarianceS
     sphere_marker.scale.y = 0.3;
     sphere_marker.scale.z = 0.3;
     sphere_marker.color.r = 1.0;
-    sphere_marker.color.a = 1.0;  // Opacity
+    sphere_marker.color.a = 1.0; // Opacity
 
     // Publish the marker
     sphere_marker_publisher_.publish(sphere_marker);
-
 }
-
-
 
 void PoseToMarker::createArrowMarker(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
 {
@@ -83,47 +86,64 @@ void PoseToMarker::createArrowMarker(const geometry_msgs::PoseWithCovarianceStam
     marker.scale.x = 1.4;
     marker.scale.y = 0.075;
     marker.scale.z = 0.075;
-    marker.color.a = 0.75;  // Opacity
+    marker.color.a = 0.75; // Opacity
     marker.color.r = 1.0;
-
-    // if (arrow_marker_array_.size() > markerLimit_)
-    // {
-    //     arrow_marker_array_.clear();
-    // }
-
-    // arrow_marker_array_.push_back(marker);
-
-    // visualization_msgs::MarkerArray arrow_marker_array_msg;
-    // arrow_marker_array_msg.markers = arrow_marker_array_;
 
     arrow_marker_publisher_.publish(marker);
 }
 
-void PoseToMarker::createLineMarker(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
+void PoseToMarker::createPoseLineMarker(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
 {
     // LINE_STRIP Marker
-    line_strip_marker.header.frame_id = msg->header.frame_id;
-    line_strip_marker.header.stamp = ros::Time::now();
-    line_strip_marker.ns = "line_strip";
-    line_strip_marker.action = visualization_msgs::Marker::ADD;
-    line_strip_marker.pose.orientation.w = 1.0;
-    line_strip_marker.id = 0;
-    line_strip_marker.type = visualization_msgs::Marker::LINE_STRIP;
+    pose_line_strip_marker.header.frame_id = msg->header.frame_id;
+    pose_line_strip_marker.header.stamp = ros::Time::now();
+    pose_line_strip_marker.ns = "line_strip";
+    pose_line_strip_marker.action = visualization_msgs::Marker::ADD;
+    pose_line_strip_marker.pose.orientation.w = 1.0;
+    pose_line_strip_marker.id = 0;
+    pose_line_strip_marker.type = visualization_msgs::Marker::LINE_STRIP;
 
     // LINE_STRIP settings
-    line_strip_marker.scale.x = 0.08;
-    line_strip_marker.color.g = 1.0; // setting colour to green
-    line_strip_marker.color.a = 1.0;  // Opacity
+    pose_line_strip_marker.scale.x = 0.08;
+    pose_line_strip_marker.color.r = 1.0; // setting colour to red
+    pose_line_strip_marker.color.a = 1.0; // Opacity
 
     geometry_msgs::Point point;
     point.x = msg->pose.pose.position.x;
     point.y = msg->pose.pose.position.y;
     point.z = msg->pose.pose.position.z;
 
-    line_strip_marker.points.push_back(point);
+    pose_line_strip_marker.points.push_back(point);
 
-    line_strip_marker_publisher_.publish(line_strip_marker);
+    pose_line_strip_marker_publisher_.publish(pose_line_strip_marker);
 }
+
+void PoseToMarker::createPredictionLineMarker(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
+{
+    // LINE_STRIP Marker
+    predict_line_strip_marker.header.frame_id = "world";
+    predict_line_strip_marker.header.stamp = ros::Time::now();
+    predict_line_strip_marker.ns = "prediction_line_strip";
+    predict_line_strip_marker.action = visualization_msgs::Marker::ADD;
+    predict_line_strip_marker.pose.orientation.w = 1.0;
+    predict_line_strip_marker.id = 0;
+    predict_line_strip_marker.type = visualization_msgs::Marker::LINE_STRIP;
+
+    // LINE_STRIP settings
+    predict_line_strip_marker.scale.x = 0.08;
+    predict_line_strip_marker.color.g = 1.0; // setting colour to green
+    predict_line_strip_marker.color.a = 1.0; // Opacity
+
+    geometry_msgs::Point point;
+    point.x = msg->pose.pose.position.x;
+    point.y = msg->pose.pose.position.y;
+    point.z = msg->pose.pose.position.z;
+
+    predict_line_strip_marker.points.push_back(point);
+
+    predict_line_strip_marker_publisher_.publish(predict_line_strip_marker);
+}
+
 
 int main(int argc, char **argv)
 {

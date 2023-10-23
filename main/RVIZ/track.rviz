@@ -115,6 +115,14 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /predict_marker_array
+      Name: Marker
+      Namespaces:
+        prediction_line_strip: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 106; 106; 106
@@ -143,7 +151,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 55.6973991394043
+      Distance: 76.77398681640625
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -159,9 +167,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.08039858192205429
+      Pitch: -0.3047964870929718
       Target Frame: catheter_frame
-      Yaw: 2.0403971672058105
+      Yaw: 1.3372154235839844
     Saved: ~
 Window Geometry:
   Displays:
@@ -181,5 +189,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1200
-  X: 140
+  X: -32
   Y: -32
