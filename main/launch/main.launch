@@ -4,7 +4,7 @@
 
   <!-- Sensor Publishing Node -->
   <param name="folder_" value="$(env MY_PATH)"/>
-  <node name="sensor_publisher" pkg="sensor_publishing" type="sensor_publishing_sensor_publisher" output="screen">
+  <node name="sensor_publisher" pkg="sensor_publishing" type="sensor_publishing_sensor_publisher">
     <param name="log_level" value="ros.rosconsole_level=info"/>
   </node>
   

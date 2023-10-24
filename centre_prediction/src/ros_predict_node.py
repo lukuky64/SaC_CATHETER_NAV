@@ -15,6 +15,7 @@ DEFAULT_SCALER = 0.07576  # found experimentally for 784x784 pixel image
 IMAGE_TOPIC = "/processed_image"
 POSE_TOPIC = "/point_cloud_odometry"
 
+PREDICTION_IMAGE_TOPIC = "/prediction_image"
 PREDICTION_TOPIC = "/prediction"
 CONTROL_TOPIC = "/control"
 
@@ -66,9 +67,7 @@ def image_callback(img_msg):
         # Offset to centre by subtracting 32 and then multiply by 'scaler_' to get in units of 'mm'
         pred_values = prediction.flatten().tolist()
         first_value = (pred_values[0] - 32) * scaler_
-        second_value = (
-            -(pred_values[1] - 32) * scaler_
-        )  # Flip the sign of the 'y' value
+        second_value = (-(pred_values[1] - 32) * scaler_)  # Flip the sign of the 'y' value
 
         control_msg.data = [first_value, second_value]
         pred_msg = project_point(first_value, second_value)
@@ -78,6 +77,15 @@ def image_callback(img_msg):
 
         if control_msg is not None:
             control_pub.publish(control_msg)
+
+        if pred_msg is not None:
+            if control_msg is not None:
+                centroid = (int(pred_values[0]), int(pred_values[1]))
+                print(centroid)
+                img_resized = cv2.resize(cv_image, (64, 64))
+                cv2.circle(img_resized, centroid, 1, (255, 255, 255), -1)
+                ros_image = bridge.cv2_to_imgmsg(img_resized, "mono8")
+                prediction_image_pub.publish(ros_image)
 
     # Increment the counter
     image_counter += 1
@@ -145,6 +153,10 @@ control_pub = rospy.Publisher(
 )
 prediction_pub = rospy.Publisher(
     PREDICTION_TOPIC, PoseWithCovarianceStamped, queue_size=10, latch=True
+)
+
+prediction_image_pub = rospy.Publisher(
+    PREDICTION_IMAGE_TOPIC, Image, queue_size=10, latch=True
 )
 
 if __name__ == "__main__":
