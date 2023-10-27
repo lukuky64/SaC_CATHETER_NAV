@@ -46,11 +46,11 @@ void interruptServiceRoutine()
         std::cout << "Pausing the code..." << std::endl;
     }
 }
+
 std::thread isr(interruptServiceRoutine);
+
 int main(int argc, char **argv)
 {
-    
-
     // Initialize the ROS node
     ros::init(argc, argv, "main_node");
 
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
 
     // Create a subscriber for the camera calibration node
-    ros::Subscriber sub = nh.subscribe("camera_calibration_topic", 1000, cameraCalibrationCallback);
+    ros::Subscriber sub = nh.subscribe("camera_calibration_topic", 10, cameraCalibrationCallback);
 
 
     // User input -> Would you like to visualise the system? (yes/no)
@@ -148,8 +148,6 @@ int main(int argc, char **argv)
     // LOOP
 
     // Exit loop when end goal is reached (within some tolerance)
-
-
 
 
     // Consider:
