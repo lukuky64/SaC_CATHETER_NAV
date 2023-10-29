@@ -5,30 +5,25 @@
 #include "std_srvs/Empty.h"
 #include "std_msgs/String.h"
 #include <iostream>
-#include <chrono>
-#include <thread>
-#include <cstdlib>
 #include <mutex>
 #include <atomic>
+#include <thread>
+#include <ncurses.h>
 
 class Main
 {
 public:
-    Main();
-    ~Main();
-
-    // Define a callback function for the camera calibration subscriber
-    void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg);
-
-    // Define a callback function for the prediction image subscriber
-    void predictionImageCallback(const YourMessageType::ConstPtr &msg);
-
-private:
-    std::atomic<bool> pauseRequested;
-    std::mutex pauseMutex;
-    std::thread isr;
-    // Add your private variables here
-
+    Main();  // Constructor
+    ~Main(); // Destructor
 };
+
+// Function prototypes
+void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg);
+void predictionImageCallback(const std_msgs::String::ConstPtr &msg);
+void interruptServiceRoutine();
+
+extern std::atomic<bool> pauseRequested;
+extern std::mutex pauseMutex;
+extern std::thread isr;
 
 #endif // MAIN_H

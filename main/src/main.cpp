@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <mutex>
 #include <atomic>
+#include <ncurses.h>
 
 // Constructor
 Main::Main()
@@ -29,24 +30,40 @@ void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg)
     ROS_INFO("Received camera calibration data: %s", msg->data.c_str());
 }
 
+// Define a callback function for the prediction_image subscriber
+void predictionImageCallback(const std_msgs::String::ConstPtr &msg)
+{
+    // Process the prediction image data here
+    // Implement the LOOP logic here
+    // Subscribe to the location of the catheter (EM data at the moment) and check if it has reached its end goal location
+    // Publish estimated time and distance until the goal location
+    // Exit the loop when the end goal is reached (within some tolerance)
+}
+
 std::atomic<bool> pauseRequested(false);
 std::mutex pauseMutex;
 
-
-//can change this to a gui input
+// Define the interrupt service routine
+//you will need to install this sudo apt-get install libncurses5-dev libncursesw5-dev
 void interruptServiceRoutine()
 {
-    std::string userInput;
-    std::cout << "Press 'p' to pause: ";
-    std::cin >> userInput;
-    if (userInput == "p")
+    while (true)
     {
-        std::lock_guard<std::mutex> lock(pauseMutex);
-        pauseRequested = true;
-        std::cout << "Pausing the code..." << std::endl;
+        int ch = getch(); // Get the character from the terminal
+        if (ch != ERR)
+        {
+            if (ch == 'p')
+            {
+                std::lock_guard<std::mutex> lock(pauseMutex);
+                pauseRequested = true;
+                std::cout << "Pausing the code..." << std::endl;
+            }
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
+// Create a thread for the interrupt service routine
 std::thread isr(interruptServiceRoutine);
 
 int main(int argc, char **argv)
@@ -58,20 +75,18 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
 
     // Create a subscriber for the camera calibration node
-    ros::Subscriber sub = nh.subscribe("camera_calibration_topic", 10, cameraCalibrationCallback);
-
+    ros::Subscriber sub_calibration = nh.subscribe("camera_calibration_topic", 10, cameraCalibrationCallback);
 
     // Create a subscriber for the prediction_image topic
-    ros::Subscriber sub = nh.subscribe("prediction_image", 1000, predictionImageCallback);
-
-
+    ros::Subscriber sub_prediction = nh.subscribe("ros_predict_node", 1000, predictionImageCallback);
 
     // User input -> Would you like to visualise the system? (yes/no)
     std::string visualize;
     std::cout << "Would you like to visualise the system? (yes/no): ";
     std::cin >> visualize;
 
-    if (visualize == "yes") {
+    if (visualize == "yes")
+    {
         // Launch RVIZ using the system function
         system("roslaunch rviz rviz");
 
@@ -123,16 +138,7 @@ int main(int argc, char **argv)
     }
 }
 
-    // LOOP
-    // Subscribe to the location of the catheter (EM data at the moment) and check if it has reached its end goal location
-    // Publish estimated time and distance until the goal location
-    // LOOP
-
-    // Exit the loop when the end goal is reached (within some tolerance)
-
-    // Consider:
-    // Create some interrupt service routine that will pause the data publishing (and moving the robot) when the user presses the space bar or something
-    // This would be cooler if we could make some sort of GUI to do this if we have time
+    
 
     isr.join(); // Join the ISR thread before exiting
 
