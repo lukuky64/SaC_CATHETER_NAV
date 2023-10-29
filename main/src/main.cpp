@@ -9,6 +9,8 @@
 #include <mutex>
 #include <atomic>
 #include <ncurses.h>
+#include <geometry_msgs/PoseWithCovarianceStamped.h>
+#include <cmath>
 
 // Constructor
 Main::Main()
@@ -22,6 +24,28 @@ Main::~Main()
     // do something
 }
 
+
+// Callback function for the subscriber
+void catheterPositionCallback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
+{
+    // Retrieve the position of the catheter from the received message
+    double catheter_x = msg->pose.pose.position.x;
+    double catheter_y = msg->pose.pose.position.y;
+    double catheter_z = msg->pose.pose.position.z;
+
+    // Store the initial position
+    if (initial_catheter_x == 0.0 && initial_catheter_y == 0.0 && initial_catheter_z == 0.0) {
+        initial_catheter_x = catheter_x;
+        initial_catheter_y = catheter_y;
+        initial_catheter_z = catheter_z;
+    }
+
+    // Calculate the Euclidean distance between the current location and the goal location
+    double distance = std::sqrt(std::pow((goal_x - catheter_x), 2) + std::pow((goal_y - catheter_y), 2) + std::pow((goal_z - catheter_z), 2));
+
+    // Print or process the calculated distance as needed
+    ROS_INFO("Euclidean distance to goal location: %f", distance);
+}
 // Define a callback function for the camera calibration subscriber
 void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg)
 {
@@ -30,15 +54,7 @@ void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg)
     ROS_INFO("Received camera calibration data: %s", msg->data.c_str());
 }
 
-// Define a callback function for the prediction_image subscriber
-void predictionImageCallback(const std_msgs::String::ConstPtr &msg)
-{
-    // Process the prediction image data here
-    // Implement the LOOP logic here
-    // Subscribe to the location of the catheter (EM data at the moment) and check if it has reached its end goal location
-    // Publish estimated time and distance until the goal location
-    // Exit the loop when the end goal is reached (within some tolerance)
-}
+
 
 std::atomic<bool> pauseRequested(false);
 std::mutex pauseMutex;
@@ -68,25 +84,21 @@ std::thread isr(interruptServiceRoutine);
 
 int main(int argc, char **argv)
 {
-    // Initialize the ROS node
+        // Initialize the ROS node
     ros::init(argc, argv, "main_node");
-
-    // Create a node handle
     ros::NodeHandle nh;
 
-    // Create a subscriber for the camera calibration node
+    // Create subscribers
     ros::Subscriber sub_calibration = nh.subscribe("camera_calibration_topic", 10, cameraCalibrationCallback);
+    //ros::Subscriber sub_prediction = nh.subscribe("ros_predict_node", 1000, predictionImageCallback);
+    ros::Subscriber catheter_sub = nh.subscribe("fliter.cpp", 10, catheterPositionCallback);
 
-    // Create a subscriber for the prediction_image topic
-    ros::Subscriber sub_prediction = nh.subscribe("ros_predict_node", 1000, predictionImageCallback);
-
-    // User input -> Would you like to visualise the system? (yes/no)
+    // User input for system visualization
     std::string visualize;
-    std::cout << "Would you like to visualise the system? (yes/no): ";
+    std::cout << "Would you like to visualize the system? (yes/no): ";
     std::cin >> visualize;
 
-    if (visualize == "yes")
-    {
+    if (visualize == "yes") {
         // Launch RVIZ using the system function
         system("roslaunch rviz rviz");
 
@@ -94,6 +106,7 @@ int main(int argc, char **argv)
         std::chrono::seconds delaySeconds(5); // Change the duration as needed
         std::this_thread::sleep_for(delaySeconds);
     }
+
 
     // run sensor publishing node, image processing node, marker publishing node
 
@@ -137,10 +150,27 @@ int main(int argc, char **argv)
         ROS_ERROR("Failed to call service /set_paused");
     }
 }
+    //user input for end goal location
+   double goal_x, goal_y, goal_z;
+    std::cout << "Enter the x-coordinate of the end location: ";
+    std::cin >> goal_x;
+    std::cout << "Enter the y-coordinate of the end location: ";
+    std::cin >> goal_y;
+    std::cout << "Enter the z-coordinate of the end location: ";
+    std::cin >> goal_z;
+
+    // Check if the input is valid
+    if (std::cin.fail()) {
+        std::cerr << "Invalid input. Please enter numeric values for the coordinates." << std::endl;
+        return 1; // exit the program with an error code
+    }
 
     
 
     isr.join(); // Join the ISR thread before exiting
+
+    // Spin to receive callback messages
+    ros::spin();
 
     return 0;
 

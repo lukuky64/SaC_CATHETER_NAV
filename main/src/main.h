@@ -20,6 +20,7 @@ public:
 // Function prototypes
 void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg);
 void predictionImageCallback(const std_msgs::String::ConstPtr &msg);
+void catheterPositionCallback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg);
 void interruptServiceRoutine();
 
 extern std::atomic<bool> pauseRequested;
