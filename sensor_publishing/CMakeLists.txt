@@ -111,12 +111,12 @@ find_package(Eigen3 REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES sensor_publishing
-  CATKIN_DEPENDS roscpp sensor_msgs
-  DEPENDS system_lib
-  pcl_conversions
-  pcl_ros  
+  #INCLUDE_DIRS include
+  #LIBRARIES sensor_publishing
+  #CATKIN_DEPENDS roscpp sensor_msgs
+  #DEPENDS system_lib
+  #pcl_conversions
+  #pcl_ros  
 )
 
 ###########

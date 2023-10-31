@@ -13,6 +13,9 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
+find_package(Threads REQUIRED)
+find_package(Curses REQUIRED)
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES main
@@ -55,7 +58,8 @@ add_executable(main_node src/main.cpp)
 ## Specify libraries to link a library or executable target against
 
 target_link_libraries(main_node ${catkin_LIBRARIES})
-
+target_link_libraries(main_node ${CURSES_LIBRARIES})
+target_link_libraries(main_node ${CMAKE_THREAD_LIBS_INIT})
 
 #############
 ## Install ##
@@ -111,3 +115,4 @@ target_link_libraries(main_node ${catkin_LIBRARIES})
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+

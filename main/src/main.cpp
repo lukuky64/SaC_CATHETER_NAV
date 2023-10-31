@@ -12,6 +12,14 @@
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
 #include <cmath>
 
+
+// Define the global variables
+double initial_catheter_x = 0.0;
+double initial_catheter_y = 0.0;
+double initial_catheter_z = 0.0;
+double goal_x, goal_y, goal_z;
+
+
 // Constructor
 Main::Main()
 {
@@ -61,18 +69,22 @@ std::mutex pauseMutex;
 
 // Define the interrupt service routine
 //you will need to install this sudo apt-get install libncurses5-dev libncursesw5-dev
-void interruptServiceRoutine()
-{
-    while (true)
-    {
+
+void interruptServiceRoutine() {
+    bool paused = false;
+    while (true) {
         int ch = getch(); // Get the character from the terminal
-        if (ch != ERR)
-        {
-            if (ch == 'p')
-            {
+        if (ch != ERR) {
+            if (ch == 'p' && !paused) {
                 std::lock_guard<std::mutex> lock(pauseMutex);
                 pauseRequested = true;
+                paused = true;
                 std::cout << "Pausing the code..." << std::endl;
+            } else if (ch == 'r' && paused) {
+                std::lock_guard<std::mutex> lock(pauseMutex);
+                pauseRequested = false;
+                paused = false;
+                std::cout << "Resuming the code..." << std::endl;
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -111,7 +123,7 @@ int main(int argc, char **argv)
     // run sensor publishing node, image processing node, marker publishing node
 
     // Run the sensor publishing node
-    system("rosrun sensor_publishing ensor_publishing_sensor_publisher");
+    system("rosrun sensor_publishing sensor_publishing");
 
     // Run the image processing node
     system("rosrun image_processing image_processing_node");
@@ -134,22 +146,21 @@ int main(int argc, char **argv)
     std::cin >> startAlgorithm;
 
     
-    if (startAlgorithm == "yes") {
+ if (startAlgorithm == "yes") {
+    pauseRequested = true; // Set the initial state to paused
     // Unpause the publishing of the data and let it flow
     ros::NodeHandle nh;
-    ros::ServiceClient client = nh.serviceClient<std_srvs::Empty>("rosservice call /set_paused");
+    ros::ServiceClient client = nh.serviceClient<std_srvs::Empty>("/set_paused");
     std_srvs::Empty srv;
-    srv.request.data = false;  // Setting the data field to false
 
-    if (client.call(srv))
-    {
+    if (client.call(srv)) {
         ROS_INFO("Data flow unpaused");
-    }
-    else
-    {
+    } else {
         ROS_ERROR("Failed to call service /set_paused");
     }
 }
+
+
     //user input for end goal location
    double goal_x, goal_y, goal_z;
     std::cout << "Enter the x-coordinate of the end location: ";

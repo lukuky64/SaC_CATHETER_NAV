@@ -9,6 +9,7 @@
 #include <atomic>
 #include <thread>
 #include <ncurses.h>
+#include <geometry_msgs/PoseWithCovarianceStamped.h>
 
 class Main
 {
@@ -26,5 +27,12 @@ void interruptServiceRoutine();
 extern std::atomic<bool> pauseRequested;
 extern std::mutex pauseMutex;
 extern std::thread isr;
+extern double initial_catheter_x;
+extern double initial_catheter_y;
+extern double initial_catheter_z;
+extern double goal_x;
+extern double goal_y;
+extern double goal_z;
 
 #endif // MAIN_H
+
