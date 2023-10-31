@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 
     if (visualize == "yes") {
         // Launch RVIZ using the system function
-        system("roslaunch rviz rviz");
+        system("roslaunch main main.launch");
 
         // Add a delay to allow time for RVIZ to load
         std::chrono::seconds delaySeconds(5); // Change the duration as needed
