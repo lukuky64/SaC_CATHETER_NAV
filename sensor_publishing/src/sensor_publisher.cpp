@@ -173,6 +173,7 @@ geometry_msgs::PoseWithCovarianceStamped sensorPublish::readEM(int count_)
             // tf2::Quaternion new_q = offset_q * original_q;
             // new_q.normalize();
 
+            // flipping the pose into the opposite direction to correct contours
             msg.pose.pose.orientation.x = values[3]; // new_q.x();
             msg.pose.pose.orientation.y = values[4]; // new_q.y();
             msg.pose.pose.orientation.z = values[5]; // new_q.z();
