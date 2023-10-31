@@ -103,7 +103,7 @@ int main(int argc, char **argv)
     // Create subscribers
     ros::Subscriber sub_calibration = nh.subscribe("camera_calibration_topic", 10, cameraCalibrationCallback);
     //ros::Subscriber sub_prediction = nh.subscribe("ros_predict_node", 1000, predictionImageCallback);
-    ros::Subscriber catheter_sub = nh.subscribe("fliter.cpp", 10, catheterPositionCallback);
+    ros::Subscriber catheter_sub = nh.subscribe("em_filter_node", 10, catheterPositionCallback);
 
     // User input for system visualization
     std::string visualize;
