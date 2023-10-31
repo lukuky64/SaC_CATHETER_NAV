@@ -111,7 +111,7 @@ int main(int argc, char **argv)
     // run sensor publishing node, image processing node, marker publishing node
 
     // Run the sensor publishing node
-    system("rosrun sensor_publishing sensor_publishing");
+    system("rosrun sensor_publishing ensor_publishing_sensor_publisher");
 
     // Run the image processing node
     system("rosrun image_processing image_processing_node");
