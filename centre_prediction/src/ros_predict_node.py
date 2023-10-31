@@ -70,7 +70,7 @@ def image_callback(img_msg):
         second_value = (-(pred_values[1] - 32) * scaler_)  # Flip the sign of the 'y' value
 
         control_msg.data = [first_value, second_value]
-        pred_msg = project_point(first_value, second_value)
+        pred_msg = project_point(first_value, -second_value)
 
         if pred_msg is not None:
             prediction_pub.publish(pred_msg)
