@@ -27,7 +27,4 @@
   <!-- RViz with specific configuration -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find main)/RVIZ/track.rviz"/>
 
-  <!-- Load track.rviz file -->
-  <param name="rviz_config_file" command="$(find main)/RVIZ/track.rviz" />
-
 </launch>
