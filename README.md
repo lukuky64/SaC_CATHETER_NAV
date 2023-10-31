@@ -4,10 +4,12 @@
 
 ### Prerequisites
 
-For easy installation from Ubuntu terminal, run the `./install_dependencies.sh` [file](install_dependencies.sh)
+For easy installation from Ubuntu terminal, run [this](install_dependencies.sh) like so: `./install_dependencies.sh` 
 
 For individual installation:
+ 
  <details>
+  
 - Ubuntu 20.04 (https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview)
 - ROS
 ```Bash
