@@ -1,4 +1,3 @@
-#include "main.h"
 #include "ros/ros.h"
 #include "std_srvs/Empty.h"
 #include "std_msgs/String.h"
@@ -12,28 +11,15 @@
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
 #include <cmath>
 
-
-// Define the global variables
+// Global variables
+std::atomic<bool> pauseRequested(false);
+std::mutex pauseMutex;
 double initial_catheter_x = 0.0;
 double initial_catheter_y = 0.0;
 double initial_catheter_z = 0.0;
 double goal_x, goal_y, goal_z;
 
-
-// Constructor
-Main::Main()
-{
-    // do something
-}
-
-// Destructor
-Main::~Main()
-{
-    // do something
-}
-
-
-// Callback function for the subscriber
+// Callback function for catheter position
 void catheterPositionCallback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg)
 {
     // Retrieve the position of the catheter from the received message
@@ -42,7 +28,8 @@ void catheterPositionCallback(const geometry_msgs::PoseWithCovarianceStamped::Co
     double catheter_z = msg->pose.pose.position.z;
 
     // Store the initial position
-    if (initial_catheter_x == 0.0 && initial_catheter_y == 0.0 && initial_catheter_z == 0.0) {
+    if (initial_catheter_x == 0.0 && initial_catheter_y == 0.0 && initial_catheter_z == 0.0)
+    {
         initial_catheter_x = catheter_x;
         initial_catheter_y = catheter_y;
         initial_catheter_z = catheter_z;
@@ -54,7 +41,8 @@ void catheterPositionCallback(const geometry_msgs::PoseWithCovarianceStamped::Co
     // Print or process the calculated distance as needed
     ROS_INFO("Euclidean distance to goal location: %f", distance);
 }
-// Define a callback function for the camera calibration subscriber
+
+// Callback function for camera calibration
 void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg)
 {
     // Process the camera calibration data here
@@ -62,130 +50,83 @@ void cameraCalibrationCallback(const std_msgs::String::ConstPtr &msg)
     ROS_INFO("Received camera calibration data: %s", msg->data.c_str());
 }
 
+void user_input_thread()
+{
+    // Initialize ncurses
+    initscr();
+    timeout(100); // Set timeout for getch()
 
+    // User input for system visualization
+    std::string visualize;
+    printw("Would you like to visualize the system? (yes/no): ");
+    refresh();
+    std::cin >> visualize;
+    endwin(); // End ncurses mode
 
-std::atomic<bool> pauseRequested(false);
-std::mutex pauseMutex;
-
-// Define the interrupt service routine
-//you will need to install this sudo apt-get install libncurses5-dev libncursesw5-dev
-
-void interruptServiceRoutine() {
-    bool paused = false;
-    while (true) {
-        int ch = getch(); // Get the character from the terminal
-        if (ch != ERR) {
-            if (ch == 'p' && !paused) {
-                std::lock_guard<std::mutex> lock(pauseMutex);
-                pauseRequested = true;
-                paused = true;
-                std::cout << "Pausing the code..." << std::endl;
-            } else if (ch == 'r' && paused) {
-                std::lock_guard<std::mutex> lock(pauseMutex);
-                pauseRequested = false;
-                paused = false;
-                std::cout << "Resuming the code..." << std::endl;
-            }
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    if (visualize == "yes")
+    {
+        system("roslaunch main main.launch");
+        std::this_thread::sleep_for(std::chrono::seconds(5));
     }
-}
 
-// Create a thread for the interrupt service routine
-std::thread isr(interruptServiceRoutine);
+    // Re-initialize ncurses if needed
+    initscr();
+    std::string startAlgorithm;  // Declare the variable
+
+    printw("Would you like to start the algorithm? (yes/no): ");
+    refresh();
+    std::cin >> startAlgorithm;
+    endwin(); // End ncurses mode
+
+    if (startAlgorithm == "yes")
+    {
+        pauseRequested = true;
+        system("rosservice call /set_paused 'data: false'");
+        printw("Data flow unpaused\n");
+    }
+    else
+    {
+        pauseRequested = false;
+        system("rosservice call /set_paused 'data: true'");
+        printw("Data flow paused\n");
+    }
+
+    // User input for end goal location
+    printw("Enter the x-coordinate of the end location: ");
+    refresh();
+    std::cin >> goal_x;
+
+    printw("Enter the y-coordinate of the end location: ");
+    refresh();
+    std::cin >> goal_y;
+
+    printw("Enter the z-coordinate of the end location: ");
+    refresh();
+    std::cin >> goal_z;
+
+    if (std::cin.fail())
+    {
+        printw("Invalid input. Please enter numeric values for the coordinates.\n");
+    }
+
+    endwin(); // End ncurses mode
+}
 
 int main(int argc, char **argv)
 {
-        // Initialize the ROS node
     ros::init(argc, argv, "main_node");
     ros::NodeHandle nh;
 
     // Create subscribers
     ros::Subscriber sub_calibration = nh.subscribe("camera_calibration_topic", 10, cameraCalibrationCallback);
-    //ros::Subscriber sub_prediction = nh.subscribe("ros_predict_node", 1000, predictionImageCallback);
     ros::Subscriber catheter_sub = nh.subscribe("em_filter_node", 10, catheterPositionCallback);
 
-    // User input for system visualization
-    std::string visualize;
-    std::cout << "Would you like to visualize the system? (yes/no): ";
-    std::cin >> visualize;
+    std::thread input_thread(user_input_thread);
 
-    if (visualize == "yes") {
-        // Launch RVIZ using the system function
-        system("roslaunch main main.launch");
+    ros::AsyncSpinner spinner(1); // Use 1 thread
+    spinner.start();
 
-        // Add a delay to allow time for RVIZ to load
-        std::chrono::seconds delaySeconds(5); // Change the duration as needed
-        std::this_thread::sleep_for(delaySeconds);
-    }
-
-
-    // run sensor publishing node, image processing node, marker publishing node
-
-    // Run the sensor publishing node
-    system("rosrun sensor_publishing sensor_publishing_sensor_publisher");
-
-    // Run the image processing node
-    system("rosrun image_processing image_processing_node");
-
-    // Run the marker publishing node
-    system("rosrun marker_publishing marker_publishing_node");
-
-
-    // The publishing node should wait 5 seconds, publish the initial location but pause before publishing the rest (for the sake of the fake data)
-    std::chrono::seconds delaySeconds(5); // Change the duration as needed
-    std::this_thread::sleep_for(delaySeconds);
-
-    // run the camera calibration node on the first image and find the scale value
-    system("rosrun camera_calibration camera_calibration_node");
-    // center prediction node (input the scale value)
-
-    // User input -> Would you like to start the algorithm? (yes/no)
-    std::string startAlgorithm;
-    std::cout << "Would you like to start the algorithm? (yes/no): ";
-    std::cin >> startAlgorithm;
-
-    
- if (startAlgorithm == "yes") {
-    pauseRequested = true; // Set the initial state to paused
-    // Unpause the publishing of the data and let it flow
-    ros::NodeHandle nh;
-    ros::ServiceClient client = nh.serviceClient<std_srvs::Empty>("/set_paused");
-    std_srvs::Empty srv;
-
-    if (client.call(srv)) {
-        ROS_INFO("Data flow unpaused");
-    } else {
-        ROS_ERROR("Failed to call service /set_paused");
-    }
-}
-
-
-    //user input for end goal location
-   double goal_x, goal_y, goal_z;
-    std::cout << "Enter the x-coordinate of the end location: ";
-    std::cin >> goal_x;
-    std::cout << "Enter the y-coordinate of the end location: ";
-    std::cin >> goal_y;
-    std::cout << "Enter the z-coordinate of the end location: ";
-    std::cin >> goal_z;
-
-    // Check if the input is valid
-    if (std::cin.fail()) {
-        std::cerr << "Invalid input. Please enter numeric values for the coordinates." << std::endl;
-        return 1; // exit the program with an error code
-    }
-
-    
-
-    isr.join(); // Join the ISR thread before exiting
-
-    // Spin to receive callback messages
-    ros::spin();
+    input_thread.join();
 
     return 0;
-
-
-
 }
-
