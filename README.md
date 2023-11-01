@@ -64,6 +64,21 @@ source devel/setup.bash
 <details>
  
 1. Set the environment variable (replace the path in the quotes with the path to your `data folder`):
+
+The structure of `data folder` should be (where `*` should be integers from 0-n):
+ 
+```Bash
+root/
+└── Aortic_catheter_project/
+    ├── Data2_Soft_pullback_1/
+    │   ├── Contours/
+    │   │   └── *.txt
+    │   ├── EM/
+    │   │   └── *.txt
+    │   └── Images/
+    │       └── *.jpg
+    └── unused_folders/
+```
  
 ```bash
 export MY_PATH="/home/lukuky64/Desktop/Aortic_catheter_project"
