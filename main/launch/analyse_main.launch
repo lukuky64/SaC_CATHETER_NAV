@@ -1,0 +1,27 @@
+<launch>
+  <!-- Static Transform Publisher -->
+  <node name="static_tf_pub" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 world map"/>
+
+  <!-- Sensor Publishing Node -->
+  <param name="folder_" value="$(env MY_PATH)"/>
+  <node name="sensor_publisher" pkg="sensor_publishing" type="sensor_publishing_sensor_publisher" launch-prefix="valgrind --tool=callgrind"/>
+  
+  <!-- Filtering Node -->
+  <node name="filter_publisher" pkg="em_filter" type="em_filter_node" launch-prefix="valgrind --tool=callgrind"/>
+  
+  <!-- Image Processing Node -->
+  <node name="image_processing" pkg="image_processing" type="image_processing_node" launch-prefix="valgrind --tool=callgrind"/>
+  
+  <!-- CNN prediction node -->
+  <node name="prediction_node" pkg="centre_prediction" type="ros_predict_node.py">
+    <param name="scaler_" value="0.07576" />
+  </node>
+
+  <!-- Marker Publishing Node -->
+  <node name="marker_publisher" pkg="marker_publishing" type="marker_publishing_node" launch-prefix="valgrind --tool=callgrind"/>
+
+  <!-- RViz with specific configuration -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find main)/RVIZ/track.rviz"/>
+
+</launch>
+
